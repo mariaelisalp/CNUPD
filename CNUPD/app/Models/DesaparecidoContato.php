@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class NaoIdentificado extends Model
+class DesaparecidoContato extends Model
 {
     use HasFactory;
-
 }

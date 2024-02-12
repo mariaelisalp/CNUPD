@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id('idLocalizacao');
             $table->string('city');
             $table->string('state');
-            $table->foreignId('desaparecido_id')->constrained('desaparecidos', 'idDesaparecido');
-            $table->foreignId('naoIdentificado_id')->constrained('nao_identificados', 'idNaoIdentificado');
             $table->timestamps();
         });
     }
