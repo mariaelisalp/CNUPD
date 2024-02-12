@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('otherFeatures', 200);
             $table->text('circumstances', 200);
             $table->text('motivations', 200);
+            $table->time('missingTime', $precision = 0);
             $table->timestamps();
         });
     }

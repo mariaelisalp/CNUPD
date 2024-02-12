@@ -21,6 +21,7 @@ return new class extends Migration
             $table->char('gender');
             $table->text('otherFeatures', 200);
             $table->text('description');
+            $table->time('time', $precision = 0);
             $table->timestamps();
         });
     }
