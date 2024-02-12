@@ -9,4 +9,12 @@ class NaoIdentificado extends Model
 {
     use HasFactory;
 
+    public function naoIdentificaoLugar(){
+        return $this->hasOne(NaoIdentificadoLugar::class);
+    }
+
+    public function naoIdentificadoContato(){
+        return $this->hasOne(NaoIdentificadoContato::class);
+    }
+
 }

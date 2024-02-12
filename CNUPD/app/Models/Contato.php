@@ -15,4 +15,12 @@ class Contato extends Model
     public function desaparecidoContato(){
         return $this->hasMany(DesaparecidoContato::class);
     }
+
+    public function naoIdentificadoLugar(){
+        return $this->hasMany(NaoIdentificadoLugar::class);
+    }
+
+    public function naoIdentificadoContato(){
+        return $this->hasMany(NaoIdentificadoContato::class);
+    }
 }

@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DesaparecidoLugar extends Model
+class NaoIdentificadoLugar extends Model
 {
     use HasFactory;
-    protected $table = 'desaparecido_lugar';
+    protected $table = 'nao_identificado_lugar';
 }

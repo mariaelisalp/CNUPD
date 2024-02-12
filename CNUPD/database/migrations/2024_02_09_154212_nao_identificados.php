@@ -21,7 +21,6 @@ return new class extends Migration
             $table->char('gender');
             $table->text('otherFeatures', 200);
             $table->text('description');
-            $table->foreignid('user_id')->constrained('users');
             $table->timestamps();
         });
     }

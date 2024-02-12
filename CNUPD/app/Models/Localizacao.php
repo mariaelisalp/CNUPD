@@ -17,4 +17,12 @@ class Localizacao extends Model
     public function desaparecidoContato(){
         return $this->hasMany(DesaparecidoContato::class);
     }
+
+    public function naoIdentificaoLugar(){
+        return $this->hasMany(NaoIdentificadoLugar::class);
+    }
+
+    public function naoIdentificadoContato(){
+        return $this->hasMany(NaoIdentificadoContato::class);
+    }
 }
