@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nao_identificado_contato', function (Blueprint $table) {
+        Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('NaoIdentificado_id')->constrained('nao_identificados', 'idNaoIdentificado');
-            $table->foreignId('contato_id')->constrained('contatos', 'idContact');
+            $table->string('name');
+            $table->string('email');
+            $table->string('number');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nao_identificado_contato');
+        Schema::dropIfExists('contacts');
     }
 };

@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('desaparecido_lugar', function (Blueprint $table) {
+        Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('desaparecido_id')->constrained('desaparecidos', 'idDesaparecido');
-            $table->foreignId('localizacao_id')->constrained('localizacao', 'idLocalizacao');
+            $table->string('city');
+            $table->string('state');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('desaparecido_lugar');
+        Schema::dropIfExists('locations');
     }
 };

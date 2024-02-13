@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contatos', function (Blueprint $table) {
-            $table->id('idContact');
-            $table->string('email');
-            $table->string('policeStationPhoneNumber');
+        Schema::create('people_contacts_locations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('people_id')->constrained('people');
+            $table->foreignId('locations_id')->constrained('locations');
+            $table->foreignId('contacts_id')->constrained('contacts');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contatos');
+        Schema::dropIfExists('people_contacts_locations');
     }
 };
