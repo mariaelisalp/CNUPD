@@ -9,4 +9,16 @@ class People_Contact_Location extends Model
 {
     use HasFactory;
     protected $table = 'people_contacts_locations';
+
+    public function people(){
+        return $this->belongsTo(People::class, 'people_id');
+    }
+
+    public function contact(){
+        return $this->belongsTo(Contact::class, 'contacts_id');
+    }
+
+    public function location(){
+        return $this->belongsTo(Location::class,'locations_id');
+    }
 }
