@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Desaparecido extends Model
+class People extends Model
 {
     use HasFactory;
 
@@ -20,10 +20,10 @@ class Desaparecido extends Model
         'gender',
         'weight',
         'birth_date',
+        'missing',
         'missing_time_date',
         'time_date',
         'age',
-        'missing',
         'father_name',
         'mother_name',
         'height',
