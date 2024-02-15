@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PeopleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/pessoas', [PeopleController::class, 'index'])->name('people.index');
+
+//cadastrar pessoa desaparecida
+Route::get('/pessoas/cadastrar', [PeopleController::class, 'create'])->name('people.create');
+Route::post('/pessoas/store', [PeopleController::class, 'store'])->name('people.store');
+Route::get('pessoas/show', [PeopleController::class, 'show'])->name('people.show');
 
 Route::get('/', function () {
     return view('welcome');
