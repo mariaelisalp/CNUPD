@@ -19,6 +19,6 @@ class People_Contact_Location extends Model
     }
 
     public function location(){
-        return $this->belongsTo(Location::class,'locations_id');
+        return $this->belongsTo(City::class,'city_id');
     }
 }

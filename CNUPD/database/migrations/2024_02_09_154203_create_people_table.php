@@ -19,8 +19,8 @@ return new class extends Migration
             $table->char('gender');
             $table->float('weight');
             $table->date('birth_date');
-            $table->date('missing_time_date');
-            $table->date('time_date');
+            $table->date('missing_time_date')->nullable();
+            $table->date('time_date')->nullable();
             $table->integer('age');
             $table->boolean('missing');
             $table->string('father_name');
