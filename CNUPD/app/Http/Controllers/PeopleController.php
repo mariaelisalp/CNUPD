@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Location;
 use App\Models\People;
 use App\Models\Contact;
-use App\Models\People_Contact_Location;
+use App\Models\City;
+use App\Models\State;
+use App\Models\People_Contact_City;
+use App\Http\Requests\StorePeopleRequest;
 
 class PeopleController extends Controller
 {
@@ -15,10 +18,19 @@ class PeopleController extends Controller
     }
 
     public function create(){
-        return view('people.create');
+        $states = State::all()->pluck('abbr','id');
+        return view('people.create', compact('states'));
     }
 
-    public function store(Request $request){
+    public function searchCities($state_id){
+        $cities = City::where('state_id', $state_id)->pluck('name', 'id');
+        return response()->json($cities);
+    }
+
+    public function store(StorePeopleRequest $request){
+
+        //validar formulário
+        $request->validated();
         
         //envia dados para tabela people
         $people = new People();
@@ -47,19 +59,12 @@ class PeopleController extends Controller
         $contact->number = $request->get('number');
         $contact->save();
 
-        //envia dados para tabela locations
-        $location = new Location();
-        $location->city = $request->get('city');
-        $location->state = $request->get('state');
-        $location->save();
-
         //chaves estrangeiras
-        $personContactLocation = new People_Contact_Location();
-        $personContactLocation->people_id = $people->id;
-        $personContactLocation->locations_id = $location->id;
-        $personContactLocation->contacts_id = $contact->id;
-        $personContactLocation->save();
-        
+        $personContactCity = new People_Contact_City();
+        $personContactCity->people_id = $people->id;
+        $personContactCity->city_id = $request->input('city');
+        $personContactCity->contacts_id = $contact->id;
+        $personContactCity->save();
 
         return redirect()->route('people.show');
 

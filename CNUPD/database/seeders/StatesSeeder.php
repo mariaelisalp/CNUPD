@@ -3,22 +3,19 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Seeder;
+use App\Models\State;
 
 class StatesSeeder extends Seeder
 {
-
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
 
-        $now = date('Y-m-d H:i:s');
-
+        $now = date("Y-m-d H:i:s");
         DB::table('states')->insert([
             [
                 'id'         => 11,
@@ -183,8 +180,6 @@ class StatesSeeder extends Seeder
                 'created_at' => $now,
                 'updated_at' => $now,
             ],
-        ]);
-
+        ]);  
     }
-
 }
