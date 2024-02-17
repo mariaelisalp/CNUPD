@@ -17,15 +17,22 @@
                     </ul>
                 </div>
             </span>  
-         @endif
+        @endif
          
 
         <h4 style="color: red;">Campos marcados com * são obrigatórios.</h4>
 
         <form action="{{route('people.store')}}" method= 'POST'>
         @csrf
+
             <div class="form-group">
                 <div class="form-group">
+
+                    <label for="missing">Status</label><br>
+                    <select id = "missing" name = "missing" onchange="data()">
+                    <option value = "1" {{ old('missing') == '1' ? 'selected' : '' }}>Desaparecido</option>
+                    <option value = "0" {{ old('missing') == '0' ? 'selected' : '' }}>Não Identificado</option>
+                    </select><br><br>
 
                     <label for="name"><p style="color: red; display: inline;">*</p> Nome</label><br>
                     <input type="text" name="name"  value="{{old('name')}}"><br><br>
@@ -50,21 +57,13 @@
                     <label for="birth_date">Data de Nascimento</label><br>
                     <input type="date" name="birth_date" value="{{ old('birth_date') }}"><br><br>
 
-                    <label for="missing">Status</label><br>
-                    <select id = "missing" name = "missing">
-                        <option value = "1">Desaparecido</option>
-                        <option value = "0">Não Identificado</option>
-                    </select><br><br>
+                    <label id= "missing_time_date_label" for="missing_time_date"><p style="color: red; display: inline;">*</p>Data de Desaparecimento</label><br>
+                    <input type="date" id = "missing_time_date" name="missing_time_date" value="{{ old('missing_time_date') }}"><br><br>
 
-                    <p style="color: red;">Preencha esse campo se a resposta anterior foi Desaparecido</p>
-                    <label for="missing_time_date"><p style="color: red; display: inline;">*</p>Data de Desaparecimento</label><br>
-                    <input type="date" name="missing_time_date" value="{{ old('missing_time_date') }}"><br><br>
+                    <label id= "time_date_label" for="time_date">Data </label><br>
+                    <input type="date" id="time_date" name="time_date" value="{{ old('time_date') }}"><br><br>
 
-                    <p style="color: red;">Preencha esse campo se a resposta anterior foi Não Identificado</p>
-                    <label for="time_date">Data </label><br>
-                    <input type="date" name="time_date" value="{{ old('time_date') }}"><br><br>
-
-                    <label for="age">Idade(data de desaparecimento)</label><br>
+                    <label for="age">Idade</label><br>
                     <input type="text" name="age"  value="{{old('age')}}"><br><br>
 
                     <label for="father_name">Nome do pai</label><br>
@@ -89,22 +88,75 @@
                     <input type="text" name="email"  value="{{old('email')}}"><br><br>
 
                     <label for="name_organization"><p style="color: red; display: inline;">*</p>Nome do Local/Organização de Registro</label><br>
-                    <input type="text" name="name"  value="{{old('name_organization')}}"><br><br>
+                    <input type="text" name="name_organization"  value="{{old('name_organization')}}"><br><br>
 
                     <label for="number"><p style="color: red; display: inline;">*</p>Telefone(somente autoridades)</label><br>
                     <input type="text" name="number"  value="{{old('number')}}" placeholder = "apenas números(11 dígitos)"><br><br>
 
-                    <label for="city"><p style="color: red; display: inline;">*</p>Cidade</label><br>
-                    <input type="text" name="city" value="{{old('city')}}"><br><br>
+                    <label for="state">Estado:</label>
+                    <select name="state" id="state">
+                        @foreach($states as $id => $abbr)
+                            <option value="{{ $id }}">{{$abbr}}</option>
+                        @endforeach
+                    </select>
 
-                    <label for="state"><p style="color: red; display: inline;">*</p>Estado</label><br>
-                    <input type="text" name="state" value="{{old('state')}}"><br><br>
- 
+                    <label for="city">Cidade:</label>
+                    <select name="city" id="city" disabled>
+                        <option value="" selected>Selecione um estado </option>
+                    </select><br><br>
 
                     <button type = "submit" >Registrar</button>   
                 </div>  
             </div>     
         </form>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#state').on('change', function(){
+                    var state_id = $(this).val();
+                    if(state_id){
+                        $.ajax({
+                            url: '/pessoas/cadastrar/buscar-cidades/' + state_id,
+                            type: 'GET',
+                            dataType: 'json',
+                            success:function(data){
+                                console.log(data);
+                                $('#city').empty();
+                                $('#city').append('<option value="" selected>Selecione uma cidade</option>');
+                                $.each(data, function(id, city){
+                                    $('#city').append('<option value="'+ id +'">'+ city +'</option>');
+                                });
+                                $('#city').prop('disabled', false);
+                            }
+                        });
+                    }else{
+                        $('#city').empty();
+                        $('#city').prop('disabled', true);
+                    }
+                });
+            });
+        </script>
+
+        <script>
+                function data() {
+                    var missing = document.getElementById("missing").value;
+
+                    missing_time_date_label.style.display = "none";
+                    missing_time_date.style.display = "none";
+                    time_date_label.style.display = "none";
+                    time_date.style.display = "none";
+
+                    if (missing === '1') {
+                        document.getElementById("missing_time_date_label").style.display = "block";
+                        document.getElementById("missing_time_date").style.display = "block";
+                    } else {
+                        document.getElementById("time_date_label").style.display = "block";
+                        document.getElementById("time_date").style.display = "block";
+                    }
+                }
+        </script>
+
     </div>
        
 @endsection

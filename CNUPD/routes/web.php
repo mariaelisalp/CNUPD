@@ -20,6 +20,9 @@ Route::get('/pessoas/cadastrar', [PeopleController::class, 'create'])->name('peo
 Route::post('/pessoas/store', [PeopleController::class, 'store'])->name('people.store');
 Route::get('pessoas/show', [PeopleController::class, 'show'])->name('people.show');
 
+Route::get('/pessoas/cadastrar/buscar-cidades/{state_id}', [PeopleController::class, 'searchCities']);
+
+
 Route::get('/', function () {
     return view('welcome');
 });
