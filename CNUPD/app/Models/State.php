@@ -10,8 +10,11 @@ class State extends Model
     use HasFactory;
 
     protected $fillable =[
+        'id',
         'name',
-        'abbr,'
+        'abbr',
+        'created_at',
+        'updated_at'
     ];
 
     public function city(){

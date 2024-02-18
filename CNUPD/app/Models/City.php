@@ -12,12 +12,20 @@ class City extends Model
     protected $table = 'cities';
 
     protected $fillable = [
-        'name'
+        'id',
+        'state_id',
+        'name',
+        'created_at',
+        'updated_at'
     ];
 
     public function state() {
 
         return $this->belongsTo(State::class, 'state_id');
 
+    }
+
+    public function peopleContactCity(){
+        return this->belongsToMany(PeopleContactCity::class);
     }
 }

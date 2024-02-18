@@ -9,8 +9,8 @@ class People extends Model
 {
     use HasFactory;
 
-    public function people_contacts_locations(){
-        return $this->hasOne(People_Contact_Location::class);
+    public function peopleContactsCity(){
+        return $this->hasOne(PeopleContactCity::class);
     }
 
     protected $fillable = [

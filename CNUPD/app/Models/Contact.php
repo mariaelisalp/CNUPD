@@ -9,8 +9,8 @@ class Contact extends Model
 {
     use HasFactory;
 
-    public function people_contacts_locations(){
-        return $this->hasMany(People_Contact_Location::class);
+    public function peopleContactCity(){
+        return $this->belongsTo(PeopleContactCity::class);
     }
 
     protected $fillable = [

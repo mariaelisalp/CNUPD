@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class People_Contact_City extends Model
+class PeopleContactCity extends Model
 {
     use HasFactory;
     protected $table = 'people_contacts_cities';
@@ -15,10 +15,10 @@ class People_Contact_City extends Model
     }
 
     public function contact(){
-        return $this->belongsTo(Contact::class, 'contacts_id');
+        return $this->hasOne(Contact::class, 'contacts_id');
     }
 
-    public function location(){
-        return $this->belongsTo(City::class,'city_id');
+    public function city(){
+        return $this->hasOne(City::class,'city_id');
     }
 }
