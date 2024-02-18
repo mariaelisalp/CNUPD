@@ -9,24 +9,84 @@ use App\Models\Contact;
 use App\Models\City;
 use App\Models\State;
 use App\Models\People_Contact_City;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePeopleRequest;
 
 class PeopleController extends Controller
 {
-    public function index(){
-        return view('people.index');
+    //listar desaparecidos
+    public function index_desaparecidos(Request $request)
+    {
+        $people = People::select('people.id', 'people.name', 'people.missing_time_date', 'people.age', 'people.gender', 'cities.name as city', 'states.abbr as state')
+        ->join('people_contacts_cities', 'people.id', '=', 'people_contacts_cities.people_id')
+        ->join('cities', 'people_contacts_cities.city_id', '=', 'cities.id')
+        ->join('states', 'cities.state_id', '=', 'states.id')
+        ->when($request->has('search'), function ($query) use ($request) {
+            $query->where(function ($query) use ($request) {
+                $query->where('people.name', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('cities.name', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('states.abbr', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('people.missing_time_date', 'like', '%' . $request->input('search') . '%')
+                    ->orWhere('people.age', '=', $request->input('search'))
+                    ->orWhere('people.gender', 'like', '%' . $request->input('search') . '%');
+            });
+        })
+        ->when($request->filled('date'), function ($query) use ($request) {
+            $query->where(function ($query) use ($request) {
+                $query->where('people.missing_time_date', '=', \Carbon\Carbon::parse($request->input('date'))->format('Y-m-d'));
+            });
+        })
+        ->where('people.missing', '=', 1)
+        ->paginate(5)
+        ->withQueryString();
+
+        return view('people.index_desaparecidos', ['people' => $people, 'search' => $request->input('search'),
+            'date' => $request->date]);
     }
 
+    //listar n identificados
+    public function index_nao_identificados(Request $request){
+        $people = People::select('people.id', 'people.name', 'people.time_date', 'people.age', 'people.gender', 'cities.name as city', 'states.abbr as state')
+        ->join('people_contacts_cities', 'people.id', '=', 'people_contacts_cities.people_id')
+        ->join('cities', 'people_contacts_cities.city_id', '=', 'cities.id')
+        ->join('states', 'cities.state_id', '=', 'states.id')
+        ->when($request->has('search'), function ($query) use ($request) {
+            $query->where(function ($query) use ($request) {
+            $query->where('people.name', 'like', '%' . $request->input('search') . '%')
+                ->orWhere('cities.name', 'like', '%' . $request->input('search') . '%')
+                ->orWhere('states.abbr', 'like', '%' . $request->input('search') . '%')
+                ->orWhere('people.time_date', 'like', '%' . $request->input('search') . '%')
+                ->orWhere('people.age', '=', $request->input('search')) 
+                ->orWhere('people.gender', 'like', '%' . $request->input('search') . '%');
+            });
+        })
+        ->when($request->filled('date'), function ($query) use ($request) {
+            $query->where(function ($query) use ($request) {
+                $query->where('people.time_date', '=', \Carbon\Carbon::parse($request->input('date'))->format('Y-m-d'));
+            });
+        })
+        ->where('people.missing', '=', 0)
+        ->paginate(5)
+        ->withQueryString();
+
+        return view('people.index_nao_identificados', ['people' => $people, 'search' => $request->input('search'),
+            'date' => $request->date]);
+
+    }
+
+    //criar um registro de pessoa
     public function create(){
         $states = State::all()->pluck('abbr','id');
         return view('people.create', compact('states'));
     }
 
+    //procura cidades no banco de acordo com estado selecionado
     public function searchCities($state_id){
         $cities = City::where('state_id', $state_id)->pluck('name', 'id');
         return response()->json($cities);
     }
 
+    //armazena dados vindo no formulário no banco
     public function store(StorePeopleRequest $request){
 
         //validar formulário
@@ -66,11 +126,45 @@ class PeopleController extends Controller
         $personContactCity->contacts_id = $contact->id;
         $personContactCity->save();
 
-        return redirect()->route('people.show');
+        return redirect()->route('people.index_desaparecidos');
 
     }
 
-    public function show(){
-        return view('people.show');
+    //Detalhes de registro
+    public function show_desaparecido(People $people){
+        $peopleContactCity = $people->people_contact_city;
+    
+        
+        if ($peopleContactCity) {
+            $contactInfo = $peopleContactCity->contact;
+            $cityInfo = $peopleContactCity->city;
+            $state = $peopleContactCity->city->state;
+        }
+    
+        return view('people.show_desaparecido', [
+            'people' => $people,
+            'contactInfo' => $contactInfo,
+            'cityInfo' => $cityInfo,
+            'state' => $state
+        ]);
     }
+
+    public function show_nao_identificado(People $people){
+        $peopleContactCity = $people->people_contact_city;
+    
+        
+        if ($peopleContactCity) {
+            $contactInfo = $peopleContactCity->contact;
+            $cityInfo = $peopleContactCity->city;
+            $state = $peopleContactCity->city->state;
+        }
+    
+        return view('people.show_nao_identificado', [
+            'people' => $people,
+            'contactInfo' => $contactInfo,
+            'cityInfo' => $cityInfo,
+            'state' => $state
+        ]);
+    }
+    
 }

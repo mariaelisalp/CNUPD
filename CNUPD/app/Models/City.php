@@ -25,7 +25,7 @@ class City extends Model
 
     }
 
-    public function peopleContactCity(){
-        return this->belongsToMany(PeopleContactCity::class);
+    public function people_contact_city(){
+        return this->belongsToMany(People_Contact_City::class, 'city_id');
     }
 }
