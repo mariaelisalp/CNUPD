@@ -49,7 +49,7 @@ class StorePeopleRequest extends FormRequest
     public function messages(): array{
         return [
             'name.required' => 'Campo nome é obrigatório',
-            'circumstances.required' => 'Insira as circustâncias da pessoa desaparecida/não identificada',
+            'circumstances.required' => 'Insira as circunstâncias da pessoa desaparecida/não identificada',
             'name_organization' => 'Insira o nome do local/organização de registro',
             'city.required' => 'Insira uma cidade',
             'state.required' => 'Insira um estado',

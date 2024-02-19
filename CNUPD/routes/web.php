@@ -27,6 +27,9 @@ Route::get('pessoas/show-nao-identificado{people}', [PeopleController::class, 's
 
 Route::get('/pessoas/cadastrar/buscar-cidades/{state_id}', [PeopleController::class, 'searchCities']);
 
+Route::get('/pessoas/edit/{people}', [PeopleController::class, 'edit'])->name('people.edit');
+Route::put('/pessoas/update/{people}', [PeopleController::class, 'update'])->name('people.update');
+
 Route::get('/', function () {
     return view('welcome');
 });

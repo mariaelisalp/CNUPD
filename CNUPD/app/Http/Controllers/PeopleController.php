@@ -166,5 +166,61 @@ class PeopleController extends Controller
             'state' => $state
         ]);
     }
+
+    public function edit(People $people){
+        $states = State::all()->pluck('abbr','id');
+
+        $peopleContactCity = $people->people_contact_city;
+    
+        if ($peopleContactCity) {
+            $contact = $peopleContactCity->contact;
+            $city = $peopleContactCity->city;
+            $state = $peopleContactCity->city->state;
+        }
+        return view('people.edit', ['people' => $people, 
+        'states' => $states,
+        'contact' => $contact,
+        'city' => $city,
+        'state' => $state]);
+    }
+
+    public function update(StorePeopleRequest $request, People $people){
+        $request -> validated();
+
+        $people_contact_city = $people->people_contact_city;
+        $contact = $people_contact_city->contact;
+        $city = $people_contact_city->city;
+
+        $people->update([
+        'name' => $request->name,
+        'eye_color' => $request->eye_color,
+        'skin_color' => $request->skin_color,
+        'gender' => $request->gender,
+        'weight' => $request->weight,
+        'birth_date' => $request->birth_date,
+        'missing' => $request->missing,
+        'missing_time_date' => $request->missing_time_date,
+        'time_date' => $request->time_date,
+        'age' => $request->age,
+        'father_name' => $request->father_name,
+        'mother_name' => $request->mother_name,
+        'height' => $request->height,
+        'other_features' => $request->other_features,
+        'circumstances' => $request->circumstances,
+        'motivations' => $request->motivations,
+        ]);
+
+        $contact->update([
+            'name_organization' => $request->name_organization,
+            'email' => $request->email,
+            'number' => $request->number,
+        ]);
+
+        $people_contact_city->update([
+            'city_id' => $request->city,   
+        ]);
+
+        return view('people.success');
+    }
     
 }

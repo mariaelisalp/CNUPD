@@ -30,4 +30,6 @@
 
     Última Alteração: {{\Carbon\Carbon::parse($people->updated_at)->tz('America/Sao_Paulo')->format('d/m/Y H:m:s')}} <br><br>
 
+    <a href="{{route('people.edit', ['people' => $people->id])}}">Editar</a>
+
 @endsection
