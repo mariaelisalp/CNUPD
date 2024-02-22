@@ -20,12 +20,14 @@ class City extends Model
     ];
 
     public function state() {
-
         return $this->belongsTo(State::class, 'state_id');
-
     }
 
     public function people_contact_city(){
-        return this->belongsToMany(People_Contact_City::class);
+        return $this->belongsToMany(People_Contact_City::class);
+    }
+
+    public function city_station(){
+        return $this->hasOne(City_Station::class);
     }
 }

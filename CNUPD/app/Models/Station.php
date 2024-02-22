@@ -9,12 +9,12 @@ class Contact extends Model
 {
     use HasFactory;
 
-    public function people_contact_city(){
-        return $this->belongsTo(People_Contact_City::class);
+    public function city_station(){
+        return $this->belongsToMany(City_Station::class);
     }
 
     protected $fillable = [
-        'name_organization',
+        'name_station',
         'email',
         'number'
     ];

@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('other_features');
             $table->string('circumstances');
             $table->string('motivations');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
