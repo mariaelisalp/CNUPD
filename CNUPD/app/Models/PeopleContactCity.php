@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class People_Contact_Location extends Model
+class People_Contact_City extends Model
 {
     use HasFactory;
-    protected $table = 'people_contacts_locations';
+    protected $table = 'people_contacts_cities';
 
     public function people(){
         return $this->belongsTo(People::class, 'people_id');
@@ -18,7 +18,7 @@ class People_Contact_Location extends Model
         return $this->belongsTo(Contact::class, 'contacts_id');
     }
 
-    public function location(){
+    public function city(){
         return $this->belongsTo(City::class,'city_id');
     }
 }

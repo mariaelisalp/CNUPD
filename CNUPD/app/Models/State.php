@@ -12,7 +12,9 @@ class State extends Model
     protected $fillable =[
         'id',
         'name',
-        'abbr,'
+        'abbr',
+        'created_at',
+        'updated_at'
     ];
 
     public function city(){

@@ -9,8 +9,8 @@ class People extends Model
 {
     use HasFactory;
 
-    public function people_contacts_locations(){
-        return $this->hasOne(People_Contact_Location::class);
+    public function people_contacts_city(){
+        return $this->hasOne(People_Contact_City::class);
     }
 
     protected $fillable = [
@@ -29,7 +29,8 @@ class People extends Model
         'height',
         'other_features',
         'circumstances',
-        'motivations'
+        'motivations',
+        'image'
     ];
 
 }  
