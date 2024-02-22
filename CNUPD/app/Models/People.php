@@ -29,7 +29,8 @@ class People extends Model
         'height',
         'other_features',
         'circumstances',
-        'motivations'
+        'motivations',
+        'image'
     ];
 
 }  

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('people_contacts_cities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('people_id')->constrained('people');
+            $table->foreignId('people_id')->constrained('people')->onDelete('cascade')->onUpdate('cascade');;
             $table->foreignId('city_id')->constrained('cities');
-            $table->foreignId('contacts_id')->constrained('contacts');
+            $table->foreignId('contacts_id')->constrained('contacts')->onDelete('cascade')->onUpdate('cascade');;
             $table->timestamps();
         });
     }
