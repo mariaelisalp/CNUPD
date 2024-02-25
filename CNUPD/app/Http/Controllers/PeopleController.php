@@ -13,9 +13,6 @@ use App\Http\Requests\StorePeopleRequest;
 
 class PeopleController extends Controller
 {
-    public function index(){
-        return view('people.index');
-    }
 
     public function create(){
         $states = State::all()->pluck('abbr','id');
@@ -31,6 +28,17 @@ class PeopleController extends Controller
 
         //validar formulário
         $request->validated();
+
+
+        if($request->hasFile('image')){
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noImage';
+        }
         
         //envia dados para tabela people
         $people = new People();
@@ -50,27 +58,17 @@ class PeopleController extends Controller
         $people->other_features = $request->get('other_features');
         $people->circumstances = $request->get('circumstances');
         $people->motivations = $request->get('motivations');
+        $people->image = $fileNameToStore;
         $people->save();
-
-        //envia dados para tabela contacts
-        $contact = new Contact();
-        $contact->name_organization = $request->get('name_organization');
-        $contact->email = $request->get('email');
-        $contact->number = $request->get('number');
-        $contact->save();
 
         //chaves estrangeiras
         $personContactCity = new People_Contact_City();
         $personContactCity->people_id = $people->id;
         $personContactCity->city_id = $request->input('city');
-        $personContactCity->contacts_id = $contact->id;
         $personContactCity->save();
 
-        return redirect()->route('people.show');
+        return view('welcome');
 
     }
-
-    public function show(){
-        return view('people.show');
-    }
+   
 }

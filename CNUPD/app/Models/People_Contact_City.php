@@ -14,10 +14,6 @@ class People_Contact_City extends Model
         return $this->belongsTo(People::class, 'people_id');
     }
 
-    public function contact(){
-        return $this->belongsTo(Contact::class, 'contacts_id');
-    }
-
     public function location(){
         return $this->belongsTo(City::class,'city_id');
     }
