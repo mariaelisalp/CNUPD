@@ -32,6 +32,13 @@
 
     Última Alteração: {{\Carbon\Carbon::parse($people->updated_at)->tz('America/Sao_Paulo')->format('d/m/Y H:m:s')}} <br><br>
 
-    <a href="{{route('people.edit', ['people' => $people->id])}}">Editar</a>
+    <a href="{{route('people.edit', ['people' => $people->id])}}"><button>Editar</button></a><br><br>
+
+   <form action="{{route('people.delete', ['people' => $people->id])}}" method="POST">
+        @csrf
+        @method('delete')
+
+        <button type="submit" onclick= "return confirm('Tem certeza que deseja apagar esse registro?')">Excluir</button>
+   </form>
 
 @endsection

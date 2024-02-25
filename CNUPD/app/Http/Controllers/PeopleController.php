@@ -129,7 +129,12 @@ class PeopleController extends Controller
         $personContactCity->city_id = $request->input('city');
         $personContactCity->save();
 
-        return view('welcome');
+        if($people->missing == 1){
+            return redirect()->route('people.index_desaparecidos');
+       }
+       else{
+            return redirect()->route('people.index_nao_identificados');
+       }
 
     }
 
@@ -194,7 +199,6 @@ class PeopleController extends Controller
         }
 
         $people_contact_city = $people->people_contact_city;
-        $contact = $people_contact_city->contact;
         $city = $people_contact_city->city;
 
         $people->update([
@@ -221,7 +225,26 @@ class PeopleController extends Controller
             'city_id' => $request->city,   
         ]);
 
-        return view('welcome');
+        if($people->missing == 1){
+            return redirect()->route('people.show', ['people' => $people->id]);
+       }
+       else{
+            return redirect()->route('people.show', ['people' => $people->id]);
+       }
+    }
+
+    public function delete(People $people){
+
+       $people->delete();
+
+       if($people->missing == 1){
+            return redirect()->route('people.index_desaparecidos');
+       }
+       else{
+            return redirect()->route('people.index_nao_identificados');
+       }
+       
+
     }
     
 }
