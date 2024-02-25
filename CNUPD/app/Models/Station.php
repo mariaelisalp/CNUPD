@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class Station extends Model
 {
     use HasFactory;
 
-    public function people_contact_city(){
-        return $this->belongsTo(People_Contact_City::class, 'contacts_id');
+    public function city_station(){
+        return $this->belongsToMany(City_Station::class);
     }
 
     protected $fillable = [
-        'name_organization',
+        'name_station',
         'email',
         'number'
     ];

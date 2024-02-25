@@ -31,6 +31,8 @@
     @if($people->isEmpty())
         <p>Nenhum resultado encontrado para a pesquisa "{{ $search }}".</p>
     @else
+
+    <p>As informações registradas em relação a pessoas não identificadas são valores aproximados.</p>
         <table class="table">
         <thead>
             <tr>
@@ -54,7 +56,7 @@
                 <td>{{$person->gender}}</td>
                 <td>{{$person->city}}</td>
                 <td>{{$person->state}}</td>
-                <td><a href="{{route('people.show_nao_identificado', ['people' => $person->id])}}">Visualizar</a></td>
+                <td><a href="{{route('people.show', ['people' => $person->id])}}">Visualizar</a></td>
             </tr>
         
         @endforeach

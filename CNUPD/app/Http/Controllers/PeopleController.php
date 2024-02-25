@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Location;
 use App\Models\People;
-use App\Models\Contact;
+use App\Models\Station;
+use App\Models\City_Station;
 use App\Models\City;
 use App\Models\State;
 use App\Models\People_Contact_City;
@@ -88,10 +89,19 @@ class PeopleController extends Controller
 
     //armazena dados vindo no formulário no banco
     public function store(StorePeopleRequest $request){
-
         //validar formulário
         $request->validated();
-        
+
+        if($request->hasFile('image')){
+            $filenameWithExt = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileNameToStore= $filename.'_'.time().'.'.$extension;
+            $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noImage.jpg';
+        }
+
         //envia dados para tabela people
         $people = new People();
         $people->name = $request->get('name');
@@ -110,61 +120,48 @@ class PeopleController extends Controller
         $people->other_features = $request->get('other_features');
         $people->circumstances = $request->get('circumstances');
         $people->motivations = $request->get('motivations');
+        $people->image = $fileNameToStore;
         $people->save();
-
-        //envia dados para tabela contacts
-        $contact = new Contact();
-        $contact->name_organization = $request->get('name_organization');
-        $contact->email = $request->get('email');
-        $contact->number = $request->get('number');
-        $contact->save();
 
         //chaves estrangeiras
         $personContactCity = new People_Contact_City();
         $personContactCity->people_id = $people->id;
         $personContactCity->city_id = $request->input('city');
-        $personContactCity->contacts_id = $contact->id;
         $personContactCity->save();
 
-        return redirect()->route('people.index_desaparecidos');
+        return view('welcome');
 
     }
 
     //Detalhes de registro
-    public function show_desaparecido(People $people){
+    public function show(People $people){
         $peopleContactCity = $people->people_contact_city;
     
         
         if ($peopleContactCity) {
-            $contactInfo = $peopleContactCity->contact;
+            $contactInfo = $peopleContactCity->city->city_station->station;
             $cityInfo = $peopleContactCity->city;
             $state = $peopleContactCity->city->state;
         }
+
+        if($people->missing == 1){
+            return view('people.show_desaparecido', [
+                'people' => $people,
+                'contactInfo' => $contactInfo,
+                'cityInfo' => $cityInfo,
+                'state' => $state
+            ]);
+        }
+        else{
+            return view('people.show_nao_identificado', [
+                'people' => $people,
+                'contactInfo' => $contactInfo,
+                'cityInfo' => $cityInfo,
+                'state' => $state
+            ]);
+        }
     
-        return view('people.show_desaparecido', [
-            'people' => $people,
-            'contactInfo' => $contactInfo,
-            'cityInfo' => $cityInfo,
-            'state' => $state
-        ]);
+        
     }
 
-    public function show_nao_identificado(People $people){
-        $peopleContactCity = $people->people_contact_city;
-    
-        
-        if ($peopleContactCity) {
-            $contactInfo = $peopleContactCity->contact;
-            $cityInfo = $peopleContactCity->city;
-            $state = $peopleContactCity->city->state;
-        }
-    
-        return view('people.show_nao_identificado', [
-            'people' => $people,
-            'contactInfo' => $contactInfo,
-            'cityInfo' => $cityInfo,
-            'state' => $state
-        ]);
-    }
-    
 }
