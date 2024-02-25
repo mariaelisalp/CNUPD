@@ -54,7 +54,7 @@
                 <td>{{$person->gender}}</td>
                 <td>{{$person->city}}</td>
                 <td>{{$person->state}}</td>
-                <td><a href="{{route('people.show_desaparecido', ['people' => $person->id])}}">Visualizar</a></td>
+                <td><a href="{{route('people.show', ['people' => $person->id])}}">Visualizar</a></td>
 
             </tr> 
         

@@ -24,37 +24,39 @@ class StorePeopleRequest extends FormRequest
         return [
             'name'=> 'required|string|max:255',
             'eye_color' => 'nullable|string',
-            'skin_color' => 'nullable|string',
+            'skin_color' => 'nullable',
             'gender' => 'nullable',
             'weight'=> 'nullable|numeric',
-            'birth_date' => 'nullable|date',
+            'birth_date' => 'nullable|date|before_or_equal:today',
             'age'=> 'nullable|integer',
             'missing' => 'required',
-            'missing_time_date' => 'nullable',
-            'time_date' => 'nullable',
+            'missing_time_date' => 'nullable|date|before_or_equal:today',
+            'time_date' => 'nullable|date|before_or_equal:today',
             'father_name' => 'nullable|string',
             'mother_name' => 'nullable|string',
             'height' => 'nullable|numeric',
             'other_features' => 'nullable|string',
             'circumstances'=> 'required|string',
             'motivations' => 'nullable|string',
-            'city' => 'required | string | max:255',
-            'state' =>'required | string | max:255',
-            'name_organization' => 'required|string',
-            'email' => 'required|email',
-            'number' => 'required|numeric|digits:11',
+            'city' => 'required',
+            'state' =>'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif'
+        
         ];
     }
 
     public function messages(): array{
         return [
             'name.required' => 'Campo nome é obrigatório',
-            'circumstances.required' => 'Insira as circunstâncias da pessoa desaparecida/não identificada',
+            'circumstances.required' => 'Insira as circustâncias da pessoa desaparecida/não identificada',
             'name_organization' => 'Insira o nome do local/organização de registro',
-            'city.required' => 'Insira uma cidade',
             'state.required' => 'Insira um estado',
-            'email.required' => 'Insira um email válido',
-            'number' => 'Insira um número de telefone válido',
+            'city.required' => 'Insira uma cidade',
+            'birth_date.before_or_equal' => 'Data de nascimento inválida',
+            'missing_time_date.required' => 'Insira a data de desaparecimento',
+            'missing_time_date.before_or_equal' => 'Data de desaparecimento inválida',
+            'time_date.before_or_equal' => 'Data inválida',
+            'image.mimes' => 'A imagem deve ser do tipo: jpeg, png, jpg ou gif.',
         ];
     }
 }

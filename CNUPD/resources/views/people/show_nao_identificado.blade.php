@@ -5,6 +5,7 @@
 @section('content')
     <h2>Pessoa Não Identificada</h2>
 
+    <img src="/storage/images/{{$people->image}}" alt="" height="200" width="170" style="border-radius: 10px;"> <br><br>
     Nome: {{$people->name}} <br><br>
     Cor dos olhos: {{$people->eye_color}} <br><br>
     Cor da pele: {{$people->skin_color}} <br><br>
@@ -22,12 +23,13 @@
     Circunstâncias: {{$people->circumstances}} <br><br>
     Possíveis Motivações: {{$people->motivations}} <br><br>
 
-    Contato: <br>{{ $contactInfo->name_organization }} <br>
+    Contato: <br><br>{{ $contactInfo->name_station }} <br>
     Email: {{ $contactInfo->email }} <br>
     Telefone: {{ $contactInfo->number}} <br><br>
+   
+
 
     Última Alteração: {{\Carbon\Carbon::parse($people->updated_at)->tz('America/Sao_Paulo')->format('d/m/Y H:m:s')}} <br><br>
 
     <a href="{{route('people.edit', ['people' => $people->id])}}">Editar</a>
-    
 @endsection

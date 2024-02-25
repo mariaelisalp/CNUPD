@@ -22,11 +22,12 @@ Route::get('/pessoas/cadastrar', [PeopleController::class, 'create'])->name('peo
 Route::post('/pessoas/store', [PeopleController::class, 'store'])->name('people.store');
 
 //Mostrar detalhes
-Route::get('pessoas/show-desaparecido{people}', [PeopleController::class, 'show_desaparecido'])->name('people.show_desaparecido');
-Route::get('pessoas/show-nao-identificado{people}', [PeopleController::class, 'show_nao_identificado'])->name('people.show_nao_identificado');
+Route::get('pessoas/show/{people}', [PeopleController::class, 'show'])->name('people.show');
 
+//Busca cidades
 Route::get('/pessoas/cadastrar/buscar-cidades/{state_id}', [PeopleController::class, 'searchCities']);
 
+//Editar registro
 Route::get('/pessoas/edit/{people}', [PeopleController::class, 'edit'])->name('people.edit');
 Route::put('/pessoas/update/{people}', [PeopleController::class, 'update'])->name('people.update');
 

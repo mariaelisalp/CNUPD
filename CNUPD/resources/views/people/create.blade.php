@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container"></div>
-        <h1> Registrar Pessoa Desaparecida </h1>
+        <h1> Registrar Pessoa </h1>
         <hr>
 
         @if ($errors->any())
@@ -22,7 +22,7 @@
 
         <h4 style="color: red;">Campos marcados com * são obrigatórios.</h4>
 
-        <form action="{{route('people.store')}}" method= 'POST'>
+        <form action="{{route('people.store')}}" method= 'POST' enctype="multipart/form-data">
         @csrf
 
             <div class="form-group">
@@ -41,7 +41,15 @@
                     <input type="text" name="eye_color"  value="{{old('eye_color')}}"><br><br>
 
                     <label for="skin_color">Cor da Pele</label><br>
-                    <input type="text" name="skin_color"  value="{{old('skin_color')}}"><br><br>
+                    <select id = "skin_color" name = "skin_color">
+                        <option {{ old('skin_color') == '-' ? 'selected' : '' }}>-</option>
+                        <option value = "Preto" {{ old('skin_color') == 'Preto' ? 'selected' : '' }}>Preto</option>
+                        <option value = "Branco" {{ old('skin_color') == 'Branco' ? 'selected' : '' }}>Branco</option>
+                        <option value = "Pardo" {{ old('skin_color') == 'Pardo' ? 'selected' : '' }}>Pardo</option>
+                        <option value = "Indígena" {{ old('skin_color') == 'Indígena' ? 'selected' : '' }}>Indígena</option>
+                        <option value = "Amarelo" {{ old('skin_color') == 'Amarelo' ? 'selected' : '' }}>Amarelo</option>
+                        
+                    </select><br><br>
 
                     <label for="gender">Sexo</label><br>
                     <select id = "gender" name = "gender">
@@ -84,26 +92,22 @@
                     <label for="motivations">Possíveis Motivações</label><br>
                     <textarea name="motivations" id="" cols="30" rows="10">{{old('motivations')}}</textarea><br><br>
 
-                    <label for="email"><p style="color: red; display: inline;">*</p>Email(somente autoridades)</label><br>
-                    <input type="text" name="email"  value="{{old('email')}}"><br><br>
-
-                    <label for="name_organization"><p style="color: red; display: inline;">*</p>Nome do Local/Organização de Registro</label><br>
-                    <input type="text" name="name_organization"  value="{{old('name_organization')}}"><br><br>
-
-                    <label for="number"><p style="color: red; display: inline;">*</p>Telefone(somente autoridades)</label><br>
-                    <input type="text" name="number"  value="{{old('number')}}" placeholder = "apenas números(11 dígitos)"><br><br>
-
-                    <label for="state"><p style="color: red; display: inline;">*</p>Estado:</label>
+                    <label for="state">Estado:</label>
                     <select name="state" id="state">
+                        <option value="">---</option>
                         @foreach($states as $id => $abbr)
                             <option value="{{ $id }}" {{ old('state') == $id ? 'selected' : ''}}>{{$abbr}}</option>
                         @endforeach
                     </select>
 
-                    <label for="city"><p style="color: red; display: inline;">*</p>Cidade:</label>
+                    <label for="city">Cidade:</label>
                     <select name="city" id="city" disabled>
                         <option value="" selected>Selecione um estado </option>
                     </select><br><br>
+
+                    <label for="image">Escolha um arquivo de foto:</label>
+                    <input type="file" id="image" name="image" accept=".png, .jpg, .jpeg, .gif">
+                    <br><br>
 
                     <button type = "submit" >Registrar</button>   
                 </div>  
