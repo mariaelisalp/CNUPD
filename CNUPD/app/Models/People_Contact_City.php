@@ -17,4 +17,9 @@ class People_Contact_City extends Model
     public function city(){
         return $this->belongsTo(City::class,'city_id');
     }
+
+    protected $fillable = [
+        'people_id',
+        'city_id'
+    ];
 }

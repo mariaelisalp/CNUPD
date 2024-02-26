@@ -9,7 +9,7 @@ class People extends Model
 {
     use HasFactory;
 
-    public function people_contacts_city(){
+    public function people_contact_city(){
         return $this->hasOne(People_Contact_City::class);
     }
 
@@ -20,10 +20,10 @@ class People extends Model
         'gender',
         'weight',
         'birth_date',
+        'missing',
         'missing_time_date',
         'time_date',
         'age',
-        'missing',
         'father_name',
         'mother_name',
         'height',
