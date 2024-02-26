@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appPeople')
 
 @section('title', 'Não Identificados')
 
