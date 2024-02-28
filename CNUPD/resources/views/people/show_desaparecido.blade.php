@@ -3,42 +3,121 @@
 @section('title', 'Detalhes')
 
 @section('content')
-    <h2>Pessoa Desaparecida</h2>
 
-    <img src="/storage/images/{{$people->image}}" alt="" height="200" width="170" style="border-radius: 10px;"> <br><br>
+    
+     <div class="container" style="max-width: 900px;">
 
-    Nome: {{$people->name}} <br><br>
-    Cor dos olhos: {{$people->eye_color}} <br><br>
-    Cor da pele: {{$people->skin_color}} <br><br>
-    Sexo: {{$people->gender}} <br><br>
-    Peso: {{$people->weight}} KG<br><br>
-    Cidade: {{ $cityInfo->name }} <br><br>
-    Estado: {{ $state->name }} <br><br>
-    Data de Nascimento: {{\Carbon\Carbon::parse($people->birth_date)->format('d/m/Y')}} <br><br>
-    Data de Desaparecimento: {{\Carbon\Carbon::parse($people->missing_time_date)->tz('America/Sao_Paulo')->format('d/m/Y H:m:s')}} <br><br>
-    Idade: {{$people->age}} <br><br>
-    Nome do pai: {{$people->father_name}} <br><br>
-    Nome da mãe: {{$people->mother_name}} <br><br>
-    Altura: {{$people->height}} <br><br>
-    Características Adicionais: {{$people->other_features}} <br><br>
-    Circunstâncias: {{$people->circumstances}} <br><br>
-    Possíveis Motivações: {{$people->motivations}} <br><br>
+          <br><br>@if(session('success'))
+               <div class="alert alert-success">
+                    {{ session('success') }}
+               </div>
+          @endif <br>
 
-    Contato: <br><br>{{ $contactInfo->name_station }} <br>
-    Email: {{ $contactInfo->email }} <br>
-    Telefone: {{ $contactInfo->number}} <br><br>
-   
+          <br><h4 class="text-bg-primary p-3">Pessoa Desaparecida </h4>
+
+          
+               <div class="row">
+
+                    <div class="col-md-7 mt-3 mr-3">
+                         <div class="card" style="width: 30rem;">
+                         <div class="card-header"><h5 class="card-title">Dados</h5></div>
+                              <div class="card-body">
+                                   <p class="card-text">
+                                   Cidade: {{ $cityInfo->name }} <br>
+                                   Estado: {{ $state->name }} <br>
+                                   Data de Nascimento: {{\Carbon\Carbon::parse($people->birth_date)->format('d/m/Y')}} <br>
+                                   Data de Desaparecimento: {{\Carbon\Carbon::parse($people->missing_time_date)->tz('America/Sao_Paulo')->format('d/m/Y H:m:s')}} <br>
+                                   Idade: {{$people->age}} anos <br>
+                                   Nome do pai: {{$people->father_name}} <br>
+                                   Nome da mãe: {{$people->mother_name}} <br>
+                                   </p>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="col-md-4 mt-3 ms-3">
+                         <div class="card" style="width: 14rem;">
+                              <img src="/storage/images/{{$people->image}}" alt="" class="img-fluid">
+                              <div class="card-body">
+                                   <h5 class="card-title">Nome: {{$people->name}}</h5>
+                              </div>
+                         </div>
+                    </div>
+                    
+               </div>
+          
+          
+
+          <div class="col-md-6 mt-3">
+               <div class="card" style="width: 30rem;">
+               <div class="card-header"><h5 class="card-title">Características</h5></div>
+                    <div class="card-body">
+                         <p class="card-text">
+                         Cor dos olhos: {{$people->eye_color}} <br>
+                         Cor da pele: {{$people->skin_color}} <br>
+                         Sexo: {{$people->gender}} <br>
+                         Peso: {{$people->weight}} KG<br>
+                         Altura: {{$people->height}} <br>
+                         Características Adicionais: {{$people->other_features}} <br>
+                         </p>
+                    </div>
+               </div>
+          </div>
+
+          <div class="col-md-6 mt-3">
+               <div class="card" style="width: 30rem;">
+               <div class="card-header"><h5 class="card-title">Circunstâncias</h5></div>
+                    <div class="card-body">
+                         <p class="card-text">
+                         {{$people->circumstances}} <br>
+                         </p>
+                    </div>
+               </div>
+          </div>
+
+          <div class="col-md-6 mt-3">
+               <div class="card" style="width: 30rem;">
+                    <div class="card-header"><h5 class="card-title">Possíveis Motivações</h5></div>
+                    <div class="card-body">
+                         <p class="card-text">
+                         {{$people->motivations}} <br>
+                         </p>
+                    </div>
+               </div>
+          </div>
+
+          <div class="col-md-6 mt-3">
+               <div class="card" style="width: 30rem;">
+               <div class="card-header"><h5 class="card-title">Contato</h5></div>
+                    <div class="card-body">
+                         <p class="card-text">
+                         {{ $contactInfo->name_station }} <br>
+                         Email: {{ $contactInfo->email }} <br>
+                         Telefone: {{ $contactInfo->number}} <br>
+                         </p>
+                    </div>
+               </div>
+          </div>
+               
 
 
-    Última Alteração: {{\Carbon\Carbon::parse($people->updated_at)->tz('America/Sao_Paulo')->format('d/m/Y H:m:s')}} <br><br>
+         <br> Última Alteração: {{\Carbon\Carbon::parse($people->updated_at)->tz('America/Sao_Paulo')->format('d/m/Y H:m:s')}} <br><br>
 
-    <a href="{{route('people.edit', ['people' => $people->id])}}"><button>Editar</button></a><br><br>
+          <div class="d-inline-block">
+               <a href="{{route('people.edit', ['people' => $people->id])}}"><button class="btn btn-warning">Editar</button></a>
 
-   <form action="{{route('people.delete', ['people' => $people->id])}}" method="POST">
-        @csrf
-        @method('delete')
+          </div>
 
-        <button type="submit" onclick= "return confirm('Tem certeza que deseja apagar esse registro?')">Excluir</button>
-   </form>
+          <div class="d-inline-block">
+               <form action="{{route('people.delete', ['people' => $people->id])}}" method="POST">
+                    @csrf
+                    @method('delete')
+
+                    <button type="submit" class="btn btn-danger" onclick= "return confirm('Tem certeza que deseja apagar esse registro?')">Excluir</button>
+               </form>
+          </div><br><br><br>
+          
+     </div>
+    
 
 @endsection

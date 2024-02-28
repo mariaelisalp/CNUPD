@@ -9,6 +9,13 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
+        <!-- Last Name -->
+        <div>
+            <x-input-label for="last_name" :value="__('Sobrenome')" />
+            <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
+        </div>
+
         <!-- Email Address -->
         <div class="mt-4">
             <x-input-label for="email" :value="__('Email')" />
@@ -16,6 +23,29 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- Position -->
+        <div class="mt-4">
+            <x-input-label for="position" :value="__('Cargo')" />
+            <x-text-input id="position" class="block mt-1 w-full" type="text" name="position" :value="old('position')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('position')" class="mt-2" />
+        </div>
+
+        <!-- States and Cities -->
+        <div>
+            <x-select-option id="state" name="state" label="Estado" class="block mt-1 w-full">
+                <option value="">-</option>
+                    @foreach($states as $id => $abbr)
+                        <option value="{{ $id }}" {{ old('state') == $id ? 'selected' : ''}}>{{$abbr}}</option>
+                    @endforeach
+            </x-select-option>
+        </div>
+
+        <div>
+            <x-select-option id="city" name="city" label="Cidade" class="block mt-1 w-full">
+                <option value="" selected>Selecione um estado </option>
+            </x-select-option>
+        </div>
+        
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
@@ -49,4 +79,33 @@
             </x-primary-button>
         </div>
     </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#state').on('change', function(){
+                    var state_id = $(this).val();
+                    if(state_id){
+                        $.ajax({
+                            url: '/pessoas/cadastrar/buscar-cidades/' + state_id,
+                            type: 'GET',
+                            dataType: 'json',
+                            success:function(data){
+                                console.log(data);
+                                $('#city').empty();
+                                $('#city').append('<option value="" selected>Selecione uma cidade</option>');
+                                $.each(data, function(id, city){
+                                    $('#city').append('<option value="'+ id +'">'+ city +'</option>');
+                                });
+                                $('#city').prop('disabled', false);
+                            }
+                        });
+                    }else{
+                        $('#city').empty();
+                        $('#city').prop('disabled', true);
+                    }
+                });
+            });
+        </script>
+
 </x-guest-layout>

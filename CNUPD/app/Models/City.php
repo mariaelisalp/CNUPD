@@ -30,4 +30,8 @@ class City extends Model
     public function city_station(){
         return $this->hasOne(City_Station::class);
     }
+
+    public function users(){
+        return $this->hasMany(Users::class);
+    }
 }

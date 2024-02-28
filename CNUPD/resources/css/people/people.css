@@ -1,0 +1,23 @@
+hr {
+    height: 2px; 
+    background-color: #000; 
+    border: none; 
+    margin: 10px 0; 
+}
+
+body{
+    font-family: Figtree, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+}
+
+.navbar{
+    background-color: #168821;
+
+}
+
+footer {
+    background-color: #4CAF50; 
+    color: #fff; 
+    text-align: center;
+    padding: 10px;
+}

@@ -38,7 +38,7 @@ class PeopleController extends Controller
             });
         })
         ->where('people.missing', '=', 1)
-        ->paginate(5)
+        ->paginate(10)
         ->withQueryString();
 
         return view('people.index_desaparecidos', ['people' => $people, 'search' => $request->input('search'),
@@ -67,7 +67,7 @@ class PeopleController extends Controller
             });
         })
         ->where('people.missing', '=', 0)
-        ->paginate(5)
+        ->paginate(10)
         ->withQueryString();
 
         return view('people.index_nao_identificados', ['people' => $people, 'search' => $request->input('search'),
@@ -128,6 +128,11 @@ class PeopleController extends Controller
         $personContactCity->people_id = $people->id;
         $personContactCity->city_id = $request->input('city');
         $personContactCity->save();
+
+        $mensagem = 'Registro criado com sucesso.';
+
+        // Armazenar a mensagem na sessão
+        $request->session()->flash('success', $mensagem);
 
         if($people->missing == 1){
             return redirect()->route('people.index_desaparecidos');
@@ -224,6 +229,11 @@ class PeopleController extends Controller
         $people_contact_city->update([
             'city_id' => $request->city,   
         ]);
+
+        $mensagem = 'Registro editado com sucesso.';
+
+        // Armazenar a mensagem na sessão
+        $request->session()->flash('success', $mensagem);
 
         if($people->missing == 1){
             return redirect()->route('people.show', ['people' => $people->id]);
