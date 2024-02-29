@@ -3,49 +3,45 @@
 @section('title', 'FAQ')
 
 @section('content')
-    <br><br><div class="container"></div>
-            <div class="container">
-                <img src="" alt="">
-                <h3 class="text-bg-primary p-3"> Dúvidas Frequentes </h3>
 
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                         Quem pode cadastrar informações no site?
-                        </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                        <div class="accordion-body">
+    <br><br><div class="container"></div>
+            <div class="container">    
+                <h3 class="text-bg-warning p-3">Dúvidas Frequentes</h3><br>
+                    <div class="accordion" id="accordionPanelsStayOpenExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                            Quem pode cadastrar informações no site?
+                            </button>
+                            </h2>
+                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
                             <strong>Somente autoridades.</strong> Familiares e amigos podem fornecer as informações necessárias às autoridades, mas somente elas tem permissão para fazer registros.
+                            </div>
+                            </div>
                         </div>
-                        </div>
-                    </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                            Posso acessar o site de forma anônima?
                         </button>
                         </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
                         <div class="accordion-body">
-                            <strong>This is the second item's accordion body.</strong> 
+                            Sim, é possível acessar o site de forma anônima para procurar informações sobre pessoas desaparecidas e não identificadas. No entanto, para cadastrar ou atualizar informações, será necessário ter autorização e criar uma conta para garantir a integridade dos dados e a segurança do sistema.
                         </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
                             O que fazer se encontrar uma pessoa desaparecida?
                         </button>
                         </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
                         <div class="accordion-body">
-                            Os usuários devem entrar em contato imediatamente com as autoridades policiais e informar sobre a situação.
-                        </div>
-                        </div>
+                        Os usuários devem entrar em contato imediatamente com as autoridades policiais e informar sobre a situação.
                     </div>
-                </div>
-
-            </div><br><br><br><br><br><br><br><br>
+        </div>
+    </div>         
 @endsection

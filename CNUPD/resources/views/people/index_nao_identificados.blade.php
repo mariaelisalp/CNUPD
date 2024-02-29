@@ -43,7 +43,9 @@
     <hr style="margin-left: auto; margin-right: auto; height: 1px; color: #000; background-color: #000; width: 80%;">
 
     @if($people->isEmpty())
-        <p>Nenhum resultado encontrado para a pesquisa "{{ $search }}".</p>
+        <div class="container">
+            <p>Nenhum resultado encontrado para a pesquisa "{{ $search }}".</p>
+        </div>
     @else
         <div class="container">
             <table class="table">
@@ -81,14 +83,14 @@
             </table><br>
         </div>
 
-        <div class="container"><a href="{{'/pessoas/cadastrar'}}">
-            <button class="btn btn-warning btn-lg">Cadastrar Pessoa</button>
-            </a><br><br>
-        </div>
-
         <div class="pagination">
             {{ $people->onEachSide(0)->links() }}
         </div><br>
     @endif
+
+    <div class="container"><a href="{{'/pessoas/cadastrar'}}">
+        <button class="btn btn-warning btn-lg">Cadastrar Pessoa</button>
+        </a><br><br>
+    </div>
 
 @endsection

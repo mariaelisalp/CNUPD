@@ -30,7 +30,7 @@
 
                 <div>
                     <button type= "submit" class="btn btn-primary">Pesquisar</button>
-                    <a href="{{route('people.index_desaparecidos')}}">
+                    <a href="{{'/pessoas/desaparecidos'}}">
                         <button class="btn btn-secondary">Limpar</button>
                     </a>
                 </div>
@@ -40,7 +40,10 @@
     <hr style="margin-left: auto; margin-right: auto; height: 1px; color: #000; background-color: #000; width: 80%;">
 
     @if($people->isEmpty())
-        <p>Nenhum resultado encontrado para a pesquisa "{{ $search }}".</p>
+        <div class="container">
+            <p>Nenhum resultado encontrado para a pesquisa "{{ $search }}".</p>
+        </div>
+        
     @else
         <div class="container">
             <table class="table">
@@ -81,15 +84,16 @@
                 {{ $people->onEachSide(0)->links() }}
             </div><br>
             
-            <div class="container">
-                <a href="{{'/pessoas/cadastrar'}}">
-                    <button class="btn btn-warning btn-lg">Cadastrar Pessoa</button>
-                </a><br><br>
-            </div>
 
         </div>
         
         
     @endif
+
+    <div class="container">
+        <a href="{{'/pessoas/cadastrar'}}">
+            <button class="btn btn-warning btn-lg">Cadastrar Pessoa</button>
+        </a><br><br>
+    </div>
 
 @endsection

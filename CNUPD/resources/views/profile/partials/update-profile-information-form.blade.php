@@ -36,21 +36,6 @@
         </div>
 
         <div>
-            <x-select-option id="state" name="state" label="State" class="block mt-1 w-full">
-                <option value="">-</option>
-                    @foreach($states as $id => $abbr)
-                        <option value="{{ $id }}" {{ old('state', $state->id) == $id ? 'selected' : ''}}>{{$abbr}}</option>
-                    @endforeach
-            </x-select-option>
-        </div>
-
-        <div>
-            <x-select-option id="city" name="city" label="City" class="block mt-1 w-full">
-                <option value="{{ $city->id }}" selected>{{ $city->name }}</option>
-            </x-select-option>
-        </div>
-
-        <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
@@ -88,32 +73,6 @@
             @endif
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script>
-            $(document).ready(function(){
-                $('#state').on('change', function(){
-                    var state_id = $(this).val();
-                    if(state_id){
-                        $.ajax({
-                            url: '/pessoas/cadastrar/buscar-cidades/' + state_id,
-                            type: 'GET',
-                            dataType: 'json',
-                            success:function(data){
-                                console.log(data);
-                                $('#city').empty();
-                                $('#city').append('<option value="" selected>Selecione uma cidade</option>');
-                                $.each(data, function(id, city){
-                                    $('#city').append('<option value="'+ id +'">'+ city +'</option>');
-                                });
-                                $('#city').prop('disabled', false);
-                            }
-                        });
-                    }else{
-                        $('#city').empty();
-                        $('#city').prop('disabled', true);
-                    }
-                });
-            });
-        </script>
+       
     </form>
 </section>

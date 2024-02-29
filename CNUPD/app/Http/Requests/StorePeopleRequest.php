@@ -23,7 +23,7 @@ class StorePeopleRequest extends FormRequest
     {
         return [
             'name'=> 'required|string|max:255',
-            'eye_color' => 'nullable|string',
+            'eye_color' => 'nullable|string|alpha',
             'skin_color' => 'nullable',
             'gender' => 'nullable',
             'weight'=> 'nullable|numeric',
@@ -47,7 +47,7 @@ class StorePeopleRequest extends FormRequest
 
     public function messages(): array{
         return [
-            'name.required' => 'Campo nome é obrigatório',
+            'name.required' => 'Campo "nome" é obrigatório',
             'circumstances.required' => 'Insira as circustâncias da pessoa desaparecida/não identificada',
             'name_organization' => 'Insira o nome do local/organização de registro',
             'state.required' => 'Insira um estado',

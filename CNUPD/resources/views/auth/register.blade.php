@@ -31,7 +31,7 @@
         </div>
 
         <!-- States and Cities -->
-        <div>
+        <div class="mt-4">
             <x-select-option id="state" name="state" label="Estado" class="block mt-1 w-full">
                 <option value="">-</option>
                     @foreach($states as $id => $abbr)
@@ -40,10 +40,12 @@
             </x-select-option>
         </div>
 
-        <div>
+        <div class="mt-4">
+            
             <x-select-option id="city" name="city" label="Cidade" class="block mt-1 w-full">
                 <option value="" selected>Selecione um estado </option>
             </x-select-option>
+            
         </div>
         
         <!-- Password -->

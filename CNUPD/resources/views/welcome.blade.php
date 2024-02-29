@@ -21,7 +21,7 @@
         <h5 class="text-bg-warning p-3">A quem o CNUPD é destinado?</h5><br>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 mr-3">
                 <div class="card" style="width: 14rem;">
                     <img src="/storage/images/policial.png" alt="" class="img-fluid">
                     <div class="card-body">
@@ -48,6 +48,6 @@
                 </div>
             </div>
         </div>
-</div><br><br><br>
+</div><br><br><br><br><br><br>
 
 @endsection
