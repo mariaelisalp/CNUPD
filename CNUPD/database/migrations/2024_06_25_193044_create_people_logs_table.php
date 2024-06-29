@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('people_contacts_cities', function (Blueprint $table) {
+        Schema::create('people_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('people_id')->constrained('people')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('city_id')->constrained('cities');
+            $table->foreignId('people_id')->references('id')->on('people'); //ID DA PESSOA
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); //ID DO USUÁRIO QUE REALIZOU A AÇÃO
+            $table->string('action'); //tipo de ação CREATE, UPDATE, DELETE
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('people_contacts_cities');
+        Schema::dropIfExists('people_logs');
     }
 };

@@ -4,16 +4,16 @@
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <x-input-label for="username" :value="__('Username')" />
+            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('username')" class="mt-2" />
         </div>
 
         <!-- Last Name -->
         <div>
-            <x-input-label for="last_name" :value="__('Sobrenome')" />
-            <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
+            <x-input-label for="full_name" :value="__('Nome Completo')" />
+            <x-text-input id="full_name" class="block mt-1 w-full" type="text" name="full_name" :value="old('full_name')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('full_name')" class="mt-2" />
         </div>
 
         <!-- Email Address -->

@@ -129,7 +129,7 @@
                     <div class="col-md-4">
                         <label for="city" class="form-label"><p style="color: red; display: inline;">*</p>Cidade:</label>
                         <select name="city" class="form-select" id="city">
-                            <option value="{{ $peopleContactCity->city_id }}" selected>{{ $city->name }}</option>
+                            <option value="{{ $people->city_id }}" selected>{{ $city->name }}</option>
                         </select><br><br>
                     </div>
 

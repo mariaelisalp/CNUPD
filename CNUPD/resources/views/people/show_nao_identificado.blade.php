@@ -23,7 +23,7 @@
                          <div class="card-header"><h5 class="card-title">Dados</h5></div>
                               <div class="card-body">
                                    <p class="card-text">
-                                   Cidade: {{ $cityInfo->name }} <br>
+                                   Cidade: {{ $city->name }} <br>
                                    Estado: {{ $state->name }} <br>
                                    Data de Nascimento: {{\Carbon\Carbon::parse($people->birth_date)->format('d/m/Y')}} <br>
                                    Data: {{\Carbon\Carbon::parse($people->time_date)->tz('America/Sao_Paulo')->format('d/m/Y H:m:s')}} <br>

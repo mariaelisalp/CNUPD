@@ -14,6 +14,7 @@ class City extends Model
     protected $fillable = [
         'id',
         'state_id',
+        'station_id',
         'name',
         'created_at',
         'updated_at'
@@ -23,8 +24,8 @@ class City extends Model
         return $this->belongsTo(State::class, 'state_id');
     }
 
-    public function people_contact_city(){
-        return $this->belongsToMany(People_Contact_City::class);
+    public function people(){
+        return $this->belongsToMany(People::class);
     }
 
     public function city_station(){

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('time_date')->nullable();
             $table->integer('age');
             $table->boolean('missing');
+            $table->foreignId('city_id')->references('id')->on('cities');
             $table->string('father_name');
             $table->string('mother_name');
             $table->float('height');

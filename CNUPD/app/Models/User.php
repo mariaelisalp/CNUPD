@@ -18,11 +18,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'city_id',
+        'authority',
+        'admin',
         'password',
-        'last_name',
+        'full_name',
         'position',
     ];
 
@@ -48,5 +50,10 @@ class User extends Authenticatable
 
     public function city(){
         return $this->belongsTo(City::class);
+    }
+
+    public function people_log(){
+        return $this->hasMany(People_Log::class);
+
     }
 }

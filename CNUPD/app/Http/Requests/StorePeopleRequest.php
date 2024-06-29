@@ -38,7 +38,7 @@ class StorePeopleRequest extends FormRequest
             'other_features' => 'nullable|string',
             'circumstances'=> 'required|string',
             'motivations' => 'nullable|string',
-            'city' => 'required',
+            'city' => 'required|exists:cities,id',
             'state' =>'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         

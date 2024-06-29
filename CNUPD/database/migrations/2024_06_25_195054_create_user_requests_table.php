@@ -11,10 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::create('user_requests', function (Blueprint $table) {
+            $table->id();
+            $table->string('username')->unique();
+            $table->string('email')->unique();
             $table->foreignId('city_id')->references('id')->on('cities');
-            $table->string('last_name');
+            $table->string('full_name');
             $table->string('position');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->timestamps();
         });
     }
 
@@ -23,10 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('city_id');
-            $table->dropColumn('last_name');
-            $table->dropColumn('position');
-        });
+        Schema::dropIfExists('user_requests');
     }
 };

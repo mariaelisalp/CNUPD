@@ -30,7 +30,7 @@
 
                 <div>
                     <button type= "submit" class="btn btn-primary">Pesquisar</button>
-                    <a href="{{'/pessoas/desaparecidos'}}">
+                    <a href="{{'people.index_desaparecidos'}}">
                         <button class="btn btn-secondary">Limpar</button>
                     </a>
                 </div>
