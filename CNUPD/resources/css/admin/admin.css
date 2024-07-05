@@ -1,0 +1,21 @@
+hr {
+    height: 2px; 
+    background-color: #000; 
+    border: none; 
+    margin: 10px 0; 
+}
+
+body {
+    font-family: '-apple-system', 'SF Pro Display', sans-serif;
+}
+
+.navbar{
+    background-color: #c9dfcb;
+}
+
+footer {
+    background-color: #c9dfcb; 
+    color: #fff; 
+    text-align: center;
+    padding: 10px;
+}

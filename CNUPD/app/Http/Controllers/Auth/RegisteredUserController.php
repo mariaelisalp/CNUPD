@@ -56,7 +56,7 @@ class RegisteredUserController extends Controller
             'full_name' => $request->full_name,
             'position' => $request->position,
         ]);
-        dd($request);
+        //dd($request);
 
         event(new Registered($user));
 

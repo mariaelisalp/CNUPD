@@ -56,4 +56,8 @@ class User extends Authenticatable
         return $this->hasMany(People_Log::class);
 
     }
+
+    public function isAdmin(){
+        return $this->admin;
+    }
 }
