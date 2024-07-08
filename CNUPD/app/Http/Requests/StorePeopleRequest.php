@@ -22,7 +22,7 @@ class StorePeopleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=> 'required|string|max:255',
+            'name'=> 'required|string|max:255|alpha',
             'eye_color' => 'nullable|string|alpha',
             'skin_color' => 'nullable',
             'gender' => 'nullable',
@@ -32,8 +32,8 @@ class StorePeopleRequest extends FormRequest
             'missing' => 'required',
             'missing_time_date' => 'nullable|date|before_or_equal:today',
             'time_date' => 'nullable|date|before_or_equal:today',
-            'father_name' => 'nullable|string',
-            'mother_name' => 'nullable|string',
+            'father_name' => 'nullable|string|alpha',
+            'mother_name' => 'nullable|string|alpha',
             'height' => 'nullable|numeric',
             'other_features' => 'nullable|string',
             'circumstances'=> 'required|string',
@@ -52,6 +52,12 @@ class StorePeopleRequest extends FormRequest
             'name_organization' => 'Insira o nome do local/organização de registro',
             'state.required' => 'Insira um estado',
             'city.required' => 'Insira uma cidade',
+            'age.integer' => 'Idade inválida',
+            'height.numeric' => 'Altura inválida',
+            'weight.numeric' => 'Peso inválido',
+            'eye_color.alpha' => 'Campo "cor dos olhos" inválido',
+            'father_name.alpha' => 'Campos de nome só podem conter letras',
+            'mother_name.alpha' => 'Campos de nome só podem conter letras',
             'birth_date.before_or_equal' => 'Data de nascimento inválida',
             'missing_time_date.required' => 'Insira a data de desaparecimento',
             'missing_time_date.before_or_equal' => 'Data de desaparecimento inválida',
