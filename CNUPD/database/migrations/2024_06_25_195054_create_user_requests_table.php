@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('city_id')->references('id')->on('cities');
             $table->string('full_name');
             $table->string('position');
+            $table->boolean('approved')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->timestamps();
