@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PeopleController;
+use App\Http\Controllers\UserRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,12 +49,12 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['admin'])->group(function () {
-    Route::get('admin', function(){
+    /* Route::get('admin', function(){
         dd('Você é admin');
-    });
-    /* Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); */
+    }); */
+    Route::get('/admin/index', [UserRequestController::class, 'index_requisicoes'])->name('admin.index_requisicoes');
+    Route::post('/admin/index/aprova/{user_requests}', [UserRequestController::class, 'aprova_requisicao'])->name('admin.aprova_requisicao');
+    Route::delete('/admin/index/reprova/{user_requests}', [UserRequestController::class, 'rejeita_requisicao'])->name('admin.rejeita_requisicao');
 });
 
 Route::get('/dashboard', function () {
