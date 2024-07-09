@@ -53,6 +53,7 @@ Route::middleware(['admin'])->group(function () {
         dd('Você é admin');
     }); */
     Route::get('/admin/index', [UserRequestController::class, 'index_requisicoes'])->name('admin.index_requisicoes');
+    Route::get('/admin/index/exibe_requisicao/{user_requests}', [UserRequestController::class, 'exibe_requisicao'])->name('admin.exibe_requisicao');
     Route::post('/admin/index/aprova/{user_requests}', [UserRequestController::class, 'aprova_requisicao'])->name('admin.aprova_requisicao');
     Route::delete('/admin/index/reprova/{user_requests}', [UserRequestController::class, 'rejeita_requisicao'])->name('admin.rejeita_requisicao');
 });

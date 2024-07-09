@@ -4,27 +4,31 @@
 
 
 @section('content')
-    <h1>Unapproved Users</h1>
+    <h1>Análise de Solicitações</h1>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Actions</th>
+                <th>ID da Solicitação</th>
+                <th>Nome</th>
+                <th>Data da Solicitação</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
             @foreach($user_requests as $user_request)
                 <tr>
+                    <td>{{ $user_request->id }}</td>
                     <td>{{ $user_request->full_name }}</td>
-                    <td>{{ $user_request->email }}</td>
+                    <td>{{ $user_request->created_at }}</td>
                     <td>
+                        <a href="{{route('admin.exibe_requisicao', $user_request->id)}}">Visualizar</a>
                         <form action="{{ route('admin.aprova_requisicao', $user_request->id) }}" method="POST" style="display:inline;">
                             @csrf
                             <button type="submit" class="btn btn-success">Aprova</button>
                         </form>
                         <form action="{{ route('admin.rejeita_requisicao', $user_request->id) }}" method="POST" style="display:inline;">
                             @csrf
+                            @method('DELETE')
                             <button type="submit" class="btn btn-danger">Rejeita</button>
                         </form>
                     </td>
