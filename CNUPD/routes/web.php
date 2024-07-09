@@ -56,12 +56,6 @@ Route::middleware(['admin'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy'); */
 });
 
-Route::middleware(['authority'])->group(function () {
-    Route::get('authority', function(){
-        dd('Você é autoridade');
-    });
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
