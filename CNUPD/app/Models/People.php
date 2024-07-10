@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StorePeopleRequest;
 
 class People extends Model
@@ -79,11 +80,23 @@ class People extends Model
             $extension = $request->file('image')->getClientOriginalExtension();
             $fileNameToStore= $filename.'_'.time().'.'.$extension;
             $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
-        } else {
+        }
+         else {
             $fileNameToStore = 'noImage.jpg';
         }
 
         return $fileNameToStore;
+    }
+
+    public static function updateImage(StorePeopleRequest $request, People $people){
+        if ($request->input('remove_image') == '1') {
+            if ($people->image && $people->image != 'noImage.jpg') {
+                Storage::delete('public/images/' . $people->image);
+            }
+        }
+
+        return $people->uploadImage($request);
+        
     }
 
     public static function getDetails(People $people){

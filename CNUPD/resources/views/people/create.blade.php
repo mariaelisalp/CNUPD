@@ -71,7 +71,7 @@
                         </select><br><br>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label for="weight" class="form-label">Peso(kg)</label><br>
                         <input type="text" class="form-control" name="weight"  value="{{old('weight')}}"><br><br>
                     </div>
@@ -82,22 +82,21 @@
                         <input type="date" class="form-control" name="birth_date" value="{{ old('birth_date') }}"><br><br>
                     </div>
 
-                    <div class="col-md-4">
-                        <label id= "missing_time_date_label" for="missing_time_date" class="form-label"><p style="color: red; display: inline;">*</p>Data de Desaparecimento</label>
-                        <input type="date" class="form-control" id = "missing_time_date" name="missing_time_date" value="{{ old('missing_time_date') }}"><br><br>
-                    </div>
-
-                    <div class="col-md-2">
-                        <label id= "time_date_label" for="time_date" class="form-label">Data </label>
-                        <input type="date" class="form-control" id="time_date" name="time_date" value="{{ old('time_date') }}"><br><br>
-                    </div>
-                        
-
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label for="age" class="form-label">Idade</label><br>
                         <input type="text" class="form-control" name="age"  value="{{old('age')}}"><br><br>
                     </div>
 
+                    <div class="col-md-3" id="div_missing_time_date" style="display: none;">
+                        <label id="missing_time_date_label" for="missing_time_date" class="form-label"><p style="color: red; display: inline;">*</p> Data de Desaparecimento</label>
+                        <input type="date" class="form-control" id="missing_time_date" name="missing_time_date" value="{{ old('missing_time_date') }}"><br><br>
+                    </div>
+
+                    <div class="col-md-3" id="div_time_date" style="display: none;">
+                        <label id="time_date_label" for="time_date" class="form-label">Data de Registro</label>
+                        <input type="date" class="form-control" id="time_date" name="time_date" value="{{ old('time_date') }}"><br><br>
+                    </div>
+                        
                     <div class="col-md-6">
                         <label for="father_name" class="form-label">Nome do pai</label><br>
                         <input type="text" class="form-control" name="father_name"  value="{{old('father_name')}}"><br><br>
@@ -116,7 +115,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label for="state" class="form-label"> <p style="color: red; display: inline;">*</p>Estado:</label>
+                        <label for="state" class="form-label">Estado</label><br>
                         <select name="state" class="form-select" id="state">
                             <option value="">---</option>
                             @foreach($states as $id => $abbr)
@@ -126,10 +125,10 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label for="city" class="form-label"><p style="color: red; display: inline;">*</p>Cidade:</label>
-                        <select name="city" class="form-select" id="city" disabled>
-                            <option value="" selected>Selecione um estado </option>
-                        </select><br><br>
+                        <label for="city" class="form-label">Cidade</label><br>
+                        <select name="city" class="form-select" id="city" data-selected-city-id="{{ old('city') }}" {{ old('state') ? '' : 'disabled' }}>
+                            <option value="">Selecione um estado</option>
+                        </select>
                     </div>
 
                     <div class="col-md-6">
@@ -148,10 +147,9 @@
                     </div>
 
                     <div class="col">
-                        <div class="custom-file">
-                            <label for="image" class="custom-file-label">Escolha um arquivo de foto:</label><br>
-                            <input type="file" id="image" class="custom-file-input" name="image" accept=".png, .jpg, .jpeg, .gif">
-                        </div>
+                        <label for="image" class="form-label">Escolha um arquivo de foto:</label><br>
+                        <input type="file" id="image"  class="form-control" name="image" accept=".png, .jpg, .jpeg, .gif"><br>
+                        <button type="button" class="btn btn-danger" id="removeImageBtn">Remover Imagem</button>
                     </div>
 
                     <div class="col-12">
@@ -165,53 +163,85 @@
 
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script>
-            $(document).ready(function(){
-                $('#state').on('change', function(){
-                    var state_id = $(this).val();
-                    if(state_id){
+            $(document).ready(function() {
+                function loadCities(state_id, selected_city_id) {
+                    if (state_id) {
                         $.ajax({
                             url: '/pessoas/cadastrar/buscar-cidades/' + state_id,
                             type: 'GET',
                             dataType: 'json',
-                            success:function(data){
-                                console.log(data);
+                            success: function(data) {
                                 $('#city').empty();
                                 $('#city').append('<option value="" selected>Selecione uma cidade</option>');
-                                $.each(data, function(id, city){
-                                    $('#city').append('<option value="'+ id +'">'+ city +'</option>');
+                                $.each(data, function(id, city) {
+                                    $('#city').append('<option value="' + id + '">' + city + '</option>');
                                 });
+                                if (selected_city_id) {
+                                    $('#city').val(selected_city_id);
+                                }
                                 $('#city').prop('disabled', false);
                             }
                         });
-                    }else{
+                    } else {
                         $('#city').empty();
                         $('#city').prop('disabled', true);
                     }
+                }
+
+                // Quando o estado é mudado
+                $('#state').on('change', function() {
+                    var state_id = $(this).val();
+                    loadCities(state_id);
                 });
+
+                // Verifique se um estado já está selecionado ao carregar a página
+                var initial_state_id = $('#state').val();
+                var initial_city_id = $('#city').data('selected-city-id'); // Pegue o valor selecionado da cidade
+
+                if (initial_state_id) {
+                    loadCities(initial_state_id, initial_city_id);
+                }
             });
         </script>
 
         <script>
-                function data() {
-                    var missing = document.getElementById("missing").value;
+            function data() {
+                var missing = document.getElementById("missing").value;
 
-                    missing_time_date_label.style.display = "none";
-                    missing_time_date.style.display = "none";
-                    time_date_label.style.display = "none";
-                    time_date.style.display = "none";
-
-                    if (missing === '1') {
-                        document.getElementById("missing_time_date_label").style.display = "block";
-                        document.getElementById("missing_time_date").style.display = "block";
-                    } else {
-                        document.getElementById("time_date_label").style.display = "block";
-                        document.getElementById("time_date").style.display = "block";
-                    }
+                if (missing === '1') {
+                    document.getElementById("div_missing_time_date").style.display = "block";
+                    document.getElementById("div_time_date").style.display = "none";
+                } else if (missing === '0') {
+                    document.getElementById("div_missing_time_date").style.display = "none";
+                    document.getElementById("div_time_date").style.display = "block";
                 }
+            }
 
-                document.addEventListener('DOMContentLoaded', function() {
-                    data();
+            document.addEventListener('DOMContentLoaded', function() {
+                data();
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const input = document.getElementById('image');
+                const removeBtn = document.getElementById('removeImageBtn');
+                removeBtn.style.display = 'none';
+
+                input.addEventListener('change', function () {
+                    if (input.files.length > 0) {
+                        removeBtn.style.display = 'inline-block'; // Mostra o botão de remover
+                    } else {
+                        removeBtn.style.display = 'none'; 
+                    }
                 });
+
+                removeBtn.addEventListener('click', function () {
+                    input.value = ''; 
+                    removeBtn.style.display = 'none'; 
+                    
+                });
+            });
         </script>
 
     </div>
