@@ -18,6 +18,6 @@ class AdminAuth
         if(auth()->check() AND auth()->user()->admin) {
             return $next($request);
         }
-        dd('Você não é administrador');
+        return redirect()->back()->with('erro', 'Você não está autorizado a realizar esta operação');
     }
 }

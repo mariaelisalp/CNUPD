@@ -11,7 +11,7 @@
 
         <!-- Last Name -->
         <div>
-            <x-input-label for="full_name" :value="__('Nome Completo')" />
+            <x-input-label for="full_name" :value="__('Full Name')" />
             <x-text-input id="full_name" class="block mt-1 w-full" type="text" name="full_name" :value="old('full_name')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('full_name')" class="mt-2" />
         </div>
@@ -43,7 +43,7 @@
         <div class="mt-4">
             
             <x-select-option id="city" name="city" label="Cidade" class="block mt-1 w-full">
-                <option value="" selected>Selecione um estado </option>
+                <option value="" selected>Selecione um estado</option>
             </x-select-option>
             
         </div>
@@ -77,7 +77,7 @@
             </a>
 
             <x-primary-button class="ms-4">
-                {{ __('Register') }}
+                {{ __('Solicitar acesso ao sistema') }}
             </x-primary-button>
         </div>
     </form>
