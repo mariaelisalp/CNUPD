@@ -83,21 +83,21 @@
                         <input type="date" class="form-control" name="birth_date" value="{{ old('birth_date', $people->birth_date) }}"><br><br>
                     </div>
 
-                    <div class="col-md-4">
-                        <label id= "missing_time_date_label" for="missing_time_date" class="form-label"><p style="color: red; display: inline;">*</p>Data de Desaparecimento</label>
-                        <input type="date" class="form-control" id = "missing_time_date" name="missing_time_date" value="{{ old('missing_time_date', $people->missing_time_date) }}"><br><br>
-                    </div>
-
-                    <div class="col-md-2">
-                        <label id= "time_date_label" for="time_date" class="form-label">Data </label>
-                        <input type="date" class="form-control" id="time_date" name="time_date" value="{{ old('time_date', $people->time_date) }}"><br><br>
-                    </div>
-                        
-
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <label for="age" class="form-label">Idade</label><br>
                         <input type="text" class="form-control" name="age"  value="{{old('age', $people->age)}}"><br><br>
                     </div>
+
+                    <div class="col-md-3" id="div_missing_time_date" style="display: none;">
+                        <label id="missing_time_date" for="missing_time_date" class="form-label"><p style="color: red; display: inline;">*</p>Data de Desaparecimento</label>
+                        <input type="date" class="form-control" id="missing_time_date" name="missing_time_date" value="{{ old('missing_time_date', $people->missing_time_date) }}">
+                    </div>
+
+                    <div class="col-md-3" id="div_time_date" style="display: none;">
+                        <label id="time_date" for="time_date" class="form-label">Data de Registro</label>
+                        <input type="date" class="form-control" id="time_date" name="time_date" value="{{ old('time_date', $people->time_date) }}">
+                    </div>
+                        
 
                     <div class="col-md-6">
                         <label for="father_name" class="form-label">Nome do pai</label><br>
@@ -150,8 +150,13 @@
 
                     <div class="col">
                         <div class="custom-file">
-                            <label for="image" class="custom-file-label">Escolha um arquivo de foto:</label><br>
-                            <input type="file" id="image" class="custom-file-input" name="image" accept=".png, .jpg, .jpeg, .gif">
+                            <label for="image" class="custom-file-label">Adicionar ou trocar arquivo de foto:</label><br>
+                            @if($people->image != 'noImage.jpg')
+                            <img id="previewImage" src="/storage/images/{{$people->image}}" alt="Imagem atual" class="card" style="width: 14rem;">
+                            @endif
+                            <br><input type="file" id="image" class="form-control" name="image" accept=".png, .jpg, .jpeg, .gif"><br>
+                            <button type="button" class="btn btn-danger" id="removeImageBtn">Remover Imagem</button>
+                            <input type="hidden" name="remove_image" id="remove_image" value="0">
                         </div>
                     </div>
 
@@ -175,45 +180,97 @@
                             type: 'GET',
                             dataType: 'json',
                             success:function(data){
-                                console.log(data);
                                 $('#city').empty();
                                 $('#city').append('<option value="" selected>Selecione uma cidade</option>');
                                 $.each(data, function(id, city){
                                     $('#city').append('<option value="'+ id +'">'+ city +'</option>');
                                 });
                                 $('#city').prop('disabled', false);
+
+                                // Preencher o campo de cidade com o valor existente do banco de dados
+                                var city_id = '{{ old('city' , $people->city_id) }}';
+                                var city_name = '{{ $city->name }}';
+                                if (city_id && city_name) {
+                                    $('#city').val(city_id); 
+                                }
                             }
                         });
-                    }else{
+                    } else {
                         $('#city').empty();
                         $('#city').prop('disabled', true);
                     }
+                });
+                $('#state').trigger('change');
+
+            });
+        </script>
+
+
+        <script>
+            function data() {
+                var missing = document.getElementById("missing").value;
+
+                if (missing === '1') {
+                    document.getElementById("div_missing_time_date").style.display = "block";
+                    document.getElementById("div_time_date").style.display = "none";
+                } else if (missing === '0') {
+                    document.getElementById("div_missing_time_date").style.display = "none";
+                    document.getElementById("div_time_date").style.display = "block";
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                data();
+
+                document.getElementById("missing").addEventListener('change', function() {
+                    data(); // Chama a função quando o valor do select mudar
                 });
             });
         </script>
 
         <script>
-                function data() {
-                    var missing = document.getElementById("missing").value;
+            document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('image');
+            const removeBtn = document.getElementById('removeImageBtn');
+            const previewImage = document.getElementById('previewImage');
+            const removeImageInput = document.getElementById('remove_image');
 
-                    missing_time_date_label.style.display = "none";
-                    missing_time_date.style.display = "none";
-                    time_date_label.style.display = "none";
-                    time_date.style.display = "none";
+            // Inicializa o botão de remoção
+            if (!input.files.length && '{{ $people->image }}' != 'noImage.jpg') {
+                removeBtn.style.display = 'none';
+            }
 
-                    if (missing === '1') {
-                        document.getElementById("missing_time_date_label").style.display = "block";
-                        document.getElementById("missing_time_date").style.display = "block";
-                    } else {
-                        document.getElementById("time_date_label").style.display = "block";
-                        document.getElementById("time_date").style.display = "block";
-                    }
+            if ('{{ $people->image }}') {
+                removeBtn.style.display = 'inline-block';
+            }
+
+            // Evento de mudança no input de arquivo
+            input.addEventListener('change', function () {
+                const file = input.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                    removeBtn.style.display = 'inline-block';
+                    removeImageInput.value = '0'; // resetar o valor ao selecionar uma nova imagem
+                } else {
+                    previewImage.src = '{{ asset('storage/' . $people->image) }}';
+                    removeBtn.style.display = 'none';
                 }
+            });
 
-                document.addEventListener('DOMContentLoaded', function() {
-                    data();
-                });
+            // Evento de clique no botão de remoção
+            removeBtn.addEventListener('click', function () {
+                input.value = '';
+                previewImage.src = '{{ asset('storage/' . $people->image) }}';
+                removeBtn.style.display = 'none';
+                removeImageInput.value = '1'; // definir o valor para indicar a remoção da imagem
+            });
+        });
         </script>
+
 
     </div>
        

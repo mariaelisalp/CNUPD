@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Location;
 use App\Models\People;
 use App\Models\Station;
@@ -55,7 +56,6 @@ class PeopleController extends Controller
     public function store(StorePeopleRequest $request){
 
         $request->validated();
-
         $fileNameToStore = People::uploadImage($request);
  
         $people = new People();
@@ -63,6 +63,7 @@ class PeopleController extends Controller
         $people['city_id'] = $request->input('city');
         $people['image'] = $fileNameToStore;
         People::create($people);
+
 
         $mensagem = 'Registro criado com sucesso.';
 
@@ -106,19 +107,14 @@ class PeopleController extends Controller
         return view('people.edit', ['people' => $people, 
         'states' => $states,
         'city' => $city,
-        'state' => $state
+        'state' => $state,
         ]);
     }
 
     public function update(StorePeopleRequest $request, People $people){
         $request -> validated();
 
-        if($request->hasFile('image')){
-            $fileNameToStore = People::uploadImage($request);
-        }
-        else{
-            $fileNameToStore = $people->image;
-        }
+        $fileNameToStore = People::updateImage($request, $people);
 
         $people = People::findOrFail($people->id);
         $data = $request->all();
