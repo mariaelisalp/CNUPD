@@ -16,6 +16,6 @@ class User_Files extends Model
     ];
 
     public function user_request(){
-        return $this->belongsTo(User_Request::class);
+        return $this->belongsTo(UserRequest::class);
     }
 }

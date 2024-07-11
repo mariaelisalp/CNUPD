@@ -50,11 +50,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url('/dashboard') }}">Perfil</a>
                                 </li>
-                                @if (auth()->user()->admin)
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.index_requisicoes')}}">Acesso Restrito</a>
-                                </li>
-                                @endif
                             @else
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">Login</a>

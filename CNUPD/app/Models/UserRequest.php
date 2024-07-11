@@ -19,6 +19,6 @@ class UserRequest extends Model
     ];
 
     public function files(){
-        return $this->hasMany(Files::class);
+        return $this->hasMany(User_Files::class);
     }
 }
