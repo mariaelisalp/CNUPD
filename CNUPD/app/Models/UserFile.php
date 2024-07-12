@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User_Files extends Model
+class UserFile extends Model
 {
     use HasFactory;
     protected $table = 'user_files';
@@ -16,6 +16,13 @@ class User_Files extends Model
     ];
 
     public function user_request(){
-        return $this->belongsTo(User_Request::class);
+        return $this->belongsTo(UserRequest::class);
+    }
+
+    public static function saveDocs(UserRequest $userRequest, $path){
+        UserFile::create([
+            'user_request_id' => $userRequest->id,
+            'file' => $path,
+        ]);
     }
 }

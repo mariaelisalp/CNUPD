@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = UserRequest::create([
+        $userRequest = UserRequest::create([
             'username' => $request->username,
             'email' => $request->email,
             'city_id' => $request->input('city'),
@@ -58,8 +58,11 @@ class RegisteredUserController extends Controller
             'position' => $request->position,
         ]);
         //dd($request);
-
-        event(new Registered($user));
+        if($request->hasFile('files') != null){
+            UserRequest::uploadDocs($request, $userRequest);
+        }
+        
+        event(new Registered($userRequest));
 
         //Auth::login($user);
 

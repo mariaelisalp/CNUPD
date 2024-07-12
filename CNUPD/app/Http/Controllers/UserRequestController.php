@@ -11,7 +11,25 @@ use App\Models\UserRequest;
 
 class UserRequestController extends Controller
 {
-    //
+    public function index_users(){
+        $users = User::getAll();
+        return view ('admin.index_users', compact('users'));
+    }
+
+    public function disableUser(User $user){
+        $user->approved = false;
+        $user->save();
+        session()->flash('message', 'Usuário desabilitado com sucesso!');
+        return redirect()->route('admin.index_users');
+    }
+
+    public function enableUser(User $user){
+        $user->approved = true;
+        $user->save();
+        session()->flash('message', 'Usuário habilitado com sucesso!');
+        return redirect()->route('admin.index_users');
+    }
+
     public function index_requisicoes(Request $request){
         $user_requests = UserRequest::where('approved', false)->get();
        return view('admin.index_requisicoes',compact('user_requests'));

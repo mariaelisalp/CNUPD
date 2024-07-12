@@ -37,6 +37,10 @@ Route::get('/contatos', function () {
     return view('static.contacts');
 });
 
+Route::get('/login/fail', function () {
+    return view('fail');
+});
+
 Route::get('/pessoas/cadastrar/buscar-cidades/{state_id}', [PeopleController::class, 'searchCities']);
 
 Route::middleware(['auth'])->group(function () {
@@ -56,6 +60,10 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/index/exibe_requisicao/{user_requests}', [UserRequestController::class, 'exibe_requisicao'])->name('admin.exibe_requisicao');
     Route::post('/admin/index/aprova/{user_requests}', [UserRequestController::class, 'aprova_requisicao'])->name('admin.aprova_requisicao');
     Route::delete('/admin/index/reprova/{user_requests}', [UserRequestController::class, 'rejeita_requisicao'])->name('admin.rejeita_requisicao');
+
+    Route::get('/admin/index_users', [UserRequestController::class, 'index_users'])->name('admin.index_users');
+    Route::post('/admin/index/disable/{user}', [UserRequestController::class, 'disableUser'])->name('admin.disableUser');
+    Route::post('/admin/index/enable/{user}', [UserRequestController::class, 'enableUser'])->name('admin.enableUser');
 });
 
 Route::get('/dashboard', function () {
