@@ -8,6 +8,8 @@ use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use App\Models\UserRequest;
+use App\Notifications\ApprovalNotification;
+use App\Notifications\DenialNotification;
 
 class UserRequestController extends Controller
 {
@@ -26,6 +28,7 @@ class UserRequestController extends Controller
     public function aprova_requisicao(int $id){
         
         $request = UserRequest::find($id);
+        $request->notify(new ApprovalNotification());
         $request->approved = 1;
         $request->save();
         
@@ -40,6 +43,7 @@ class UserRequestController extends Controller
             'approved' => 1,
         ]);
         //dd($request);
+       
         
         event(new Registered($user));
         return redirect()->route('admin.index_requisicoes');
@@ -47,6 +51,7 @@ class UserRequestController extends Controller
 
     public function rejeita_requisicao(int $id){
         $request = UserRequest::find($id);
+        $request->notify(new DenialNotification());
         $request->delete();
         return redirect()->route('admin.index_requisicoes');
         
