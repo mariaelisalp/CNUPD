@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\City;
 use App\Models\State;
+use App\Models\UserFile;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use App\Models\UserRequest;
@@ -39,7 +40,8 @@ class UserRequestController extends Controller
         $user_request = UserRequest::find($id);
         $cidade = City::find($user_request->city_id);
         $estado = State::find($cidade->state_id);
-        return view('admin.show_requisicao', compact('user_request', 'cidade', 'estado'));
+        $files = UserFile::where('user_request_id', $id)->get();
+        return view('admin.show_requisicao', compact('user_request', 'cidade', 'estado','files'));
     }
     public function aprova_requisicao(int $id){
         

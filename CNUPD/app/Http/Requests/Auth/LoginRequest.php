@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
@@ -45,7 +46,7 @@ class LoginRequest extends FormRequest
 
         $user = User::where('email', $credentials['email'])->first();
 
-        if (! $user || $user->approved !== 1) {
+        if (($user) && ($user->approved !== 1)) {
             RateLimiter::hit($this->throttleKey());
 
             session()->flash('message', 'Entre em contato com o administrador do seu setor para saber como prosseguir.');

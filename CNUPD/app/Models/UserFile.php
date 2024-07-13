@@ -19,10 +19,10 @@ class UserFile extends Model
         return $this->belongsTo(UserRequest::class);
     }
 
-    public static function saveDocs(UserRequest $userRequest, $path){
+    public static function saveDocs(UserRequest $userRequest, $fileNameToStore){
         UserFile::create([
             'user_request_id' => $userRequest->id,
-            'file' => $path,
+            'file' => $fileNameToStore,
         ]);
     }
 }

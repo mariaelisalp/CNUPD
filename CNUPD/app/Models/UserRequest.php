@@ -21,7 +21,7 @@ class UserRequest extends Model
     ];
 
     public function files(){
-        return $this->hasMany(Files::class);
+        return $this->hasMany(UserFile::class);
     }
 
     public static function uploadDocs(Request $request,UserRequest $userRequest){
@@ -36,7 +36,7 @@ class UserRequest extends Model
             $path = $file->storeAs('public/user_docs', $fileNameToStore);
             $fileNames[] = $fileNameToStore;
 
-            UserFile::saveDocs($userRequest, $path);
+            UserFile::saveDocs($userRequest, $fileNameToStore);
         
         }
         
