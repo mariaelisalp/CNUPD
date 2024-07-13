@@ -49,7 +49,7 @@
                               <div class="card-body">
                                    <p class="card-text">
                                    @foreach($files as $file)
-                                   <a href="{{ asset('storage/user_docs/' . $file->file) }}" target="_blank">
+                                   <a href="storage/user_docs/{{$file->file}}" target="_blank">
                                         <button class="btn btn-outline-primary">{{ $file->file }}</button>
                                    </a><br><br>
                                    @endforeach

@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Models\UserFile;
+use Illuminate\Notifications\Notifiable;
 
 class UserRequest extends Model
 {
     use HasFactory;
+    use Notifiable;
 
     protected $fillable = [
         'username',

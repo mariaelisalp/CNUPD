@@ -42,7 +42,7 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
-        $credentials = $this->only('email', 'password');
+        /*$credentials = $this->only('email', 'password');
 
         $user = User::where('email', $credentials['email'])->first();
 
@@ -55,7 +55,7 @@ class LoginRequest extends FormRequest
                 'email' => trans('auth.failed'),
             ]);
             
-        }
+        }*/
 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());

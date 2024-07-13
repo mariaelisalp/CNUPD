@@ -25,7 +25,8 @@ class UserApproval
             }
             if(!empty($user)){
                 if($user_request->approved AND (!$user->approved)){
-                    return redirect()->back()->with('erro','Este usuário não está autorizado a acessar o sistema. Entre em contato com o administrador para mais informações.');
+                    session()->flash('message', 'Entre em contato com o administrador do seu setor para saber como prosseguir.');
+                    return redirect()->back();
                 }
             }
         }
