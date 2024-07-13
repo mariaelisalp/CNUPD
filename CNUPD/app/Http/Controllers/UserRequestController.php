@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\City;
 use App\Models\State;
+use App\Models\UserFile;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use App\Models\UserRequest;
@@ -13,7 +14,25 @@ use App\Notifications\DenialNotification;
 
 class UserRequestController extends Controller
 {
-    //
+    public function index_users(){
+        $users = User::getAll();
+        return view ('admin.index_users', compact('users'));
+    }
+
+    public function disableUser(User $user){
+        $user->approved = false;
+        $user->save();
+        session()->flash('message', 'Usuário desabilitado com sucesso!');
+        return redirect()->route('admin.index_users');
+    }
+
+    public function enableUser(User $user){
+        $user->approved = true;
+        $user->save();
+        session()->flash('message', 'Usuário habilitado com sucesso!');
+        return redirect()->route('admin.index_users');
+    }
+
     public function index_requisicoes(Request $request){
         $user_requests = UserRequest::where('approved', false)->get();
        return view('admin.index_requisicoes',compact('user_requests'));
@@ -23,7 +42,8 @@ class UserRequestController extends Controller
         $user_request = UserRequest::find($id);
         $cidade = City::find($user_request->city_id);
         $estado = State::find($cidade->state_id);
-        return view('admin.show_requisicao', compact('user_request', 'cidade', 'estado'));
+        $files = UserFile::where('user_request_id', $id)->get();
+        return view('admin.show_requisicao', compact('user_request', 'cidade', 'estado','files'));
     }
     public function aprova_requisicao(int $id){
         

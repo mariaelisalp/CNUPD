@@ -27,7 +27,9 @@
             alert("{{ session('erro') }}");
         </script>
     @endif
+=========
     
     
+>>>>>>>>> Temporary merge branch 2
 </body>
 </html>

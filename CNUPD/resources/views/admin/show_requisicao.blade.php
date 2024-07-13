@@ -18,7 +18,7 @@
           
                <div class="row">
 
-               <div class="col-md-4 mt-3 ms-3">
+                    <div class="col-md-4 mt-3 ms-3">
                          <div class="card" style="width: 14rem;">
                            
                               <div class="card-body">
@@ -42,6 +42,22 @@
                               </div>
                          </div>
                     </div>
+
+                    <div class="col-md-4 mt-3 ms-3">
+                         <div class="card" style="width: 20rem;">
+                         <div class="card-header"><h5 class="card-title">Documentos</h5></div>
+                              <div class="card-body">
+                                   <p class="card-text">
+                                   @foreach($files as $file)
+                                   <a href="{{ asset('storage/user_docs/' . $file->file) }}" target="_blank">
+                                        <button class="btn btn-outline-primary">{{ $file->file }}</button>
+                                   </a><br><br>
+                                   @endforeach
+                                   </p>
+                              </div>
+                         </div>
+                    </div>
+
                     <form action="{{ route('admin.aprova_requisicao', $user_request->id) }}" method="POST" style="display:inline;">
                             @csrf
                             <button type="submit" class="btn btn-success">Aprova</button>

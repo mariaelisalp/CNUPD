@@ -1,12 +1,13 @@
+@extends('layouts.appPeople')
+@section('title', 'Login')
+@section('content')
 <x-guest-layout>
+
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-
     <form method="POST" action="{{ route('login') }}">
-        @csrf
-        @if (session('erro'))
-             <script>alert("{{ session('erro') }}");</script>
-        @endif
+         @csrf
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
@@ -46,4 +47,33 @@
             </x-primary-button>
         </div>
     </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @if(session('message'))
+        <script>
+            $(document).ready(function() {
+                $('#blockedModal').modal('show');
+            });
+        </script>
+    @endif
+
+    <!-- Modal -->
+    <div class="modal fade" id="blockedModal" tabindex="-1" aria-labelledby="blockedModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="blockedModalLabel">Parece que seu acesso foi bloqueado</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ session('message') }}</p>
+                </div>
+                <div class="modal-footer">
+                    <x-close-button type="button" data-bs-dismiss="modal">Fechar</x-close-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </x-guest-layout>
+@endsection
