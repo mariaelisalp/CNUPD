@@ -15,8 +15,8 @@ class People extends Model
         return $this->belongsTo(City::class);
     }
 
-    public function people_log(){
-        return $this->hasMany(People_Log::class);
+    public function log(){
+        return $this->hasMany(Log::class);
 
     }
 
