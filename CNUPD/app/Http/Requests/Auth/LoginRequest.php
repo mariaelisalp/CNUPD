@@ -7,6 +7,8 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
@@ -40,6 +42,20 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+        /*$credentials = $this->only('email', 'password');
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        if (($user) && ($user->approved !== 1)) {
+            RateLimiter::hit($this->throttleKey());
+
+            session()->flash('message', 'Entre em contato com o administrador do seu setor para saber como prosseguir.');
+
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+            
+        }*/
 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
@@ -49,8 +65,10 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+
         RateLimiter::clear($this->throttleKey());
     }
+
 
     /**
      * Ensure the login request is not rate limited.

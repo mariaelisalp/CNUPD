@@ -27,7 +27,5 @@
             alert("{{ session('erro') }}");
         </script>
     @endif
-    
-    
 </body>
 </html>
