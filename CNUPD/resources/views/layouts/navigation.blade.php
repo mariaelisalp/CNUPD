@@ -18,8 +18,8 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.index_users')" :active="request()->routeIs('admin.index.users')">
-                        {{ __('Usuários') }}
+                    <x-nav-link :href="route('admin.index_logs')" :active="request()->routeIs('admin.index.logs')">
+                        {{ __('Atividade') }}
                     </x-nav-link>
                 </div>
 
