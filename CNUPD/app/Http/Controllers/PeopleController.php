@@ -13,6 +13,8 @@ use App\Models\State;
 use App\Models\People_Contact_City;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePeopleRequest;
+use Illuminate\Support\Facades\Log;
+use App\Models\UserActionLog;
 
 class PeopleController extends Controller
 {
@@ -55,20 +57,23 @@ class PeopleController extends Controller
     //armazena dados vindo no formulário no banco
     public function store(StorePeopleRequest $request){
 
-        $request->validated();
+        $validatedData = $request->validated();
         $fileNameToStore = People::uploadImage($request);
- 
-        $people = new People();
-        $people = $request->all();
-        $people['city_id'] = $request->input('city');
-        $people['image'] = $fileNameToStore;
-        People::create($people);
+
+        // Adicione os campos adicionais ao array de dados validados
+        $validatedData['city_id'] = $request->input('city');
+        $validatedData['image'] = $fileNameToStore;
+
+        // Crie o registro e obtenha a instância criada
+        $people = People::create($validatedData);
 
 
         $mensagem = 'Registro criado com sucesso.';
 
         // Armazenar a mensagem na sessão
         $request->session()->flash('success', $mensagem);
+        Log::channel('user_actions')->info('Record created', ['user_id' => auth()->user()->id, 'record_id' => $people->id]);
+        UserActionLog::create_log($people);
 
         if($people['missing'] == 1){
             return redirect()->route('people.index_desaparecidos');
@@ -87,6 +92,8 @@ class PeopleController extends Controller
         $details = array_merge([
             'people' => $people,
         ], $show);
+
+        UserActionLog::read_log($people);
 
         if ($people->missing == 1) {
             return view('people.show_desaparecido', $details);
@@ -126,6 +133,8 @@ class PeopleController extends Controller
         $mensagem = 'Registro editado com sucesso.';
         $request->session()->flash('success', $mensagem);
 
+        UserActionLog::update_log($people);
+
         if($people->missing == 1){
             return redirect()->route('people.show', ['people' => $people->id]);
        }
@@ -135,7 +144,7 @@ class PeopleController extends Controller
     }
 
     public function delete(People $people){
-
+        UserActionLog::delete_log();
        $people->delete();
 
        if($people->missing == 1){

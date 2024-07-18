@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\Registered;
 use App\Models\UserRequest;
 use App\Notifications\ApprovalNotification;
 use App\Notifications\DenialNotification;
+use App\Models\UserActionLog;
 
 class UserRequestController extends Controller
 {
@@ -22,6 +23,7 @@ class UserRequestController extends Controller
     public function disableUser(User $user){
         $user->approved = false;
         $user->save();
+        UserActionLog::manageAccess($user, 'DISABLE');
         session()->flash('message', 'Usuário desabilitado com sucesso!');
         return redirect()->route('admin.index_users');
     }
@@ -29,6 +31,7 @@ class UserRequestController extends Controller
     public function enableUser(User $user){
         $user->approved = true;
         $user->save();
+        UserActionLog::manageAccess($user, 'ENABLE');
         session()->flash('message', 'Usuário habilitado com sucesso!');
         return redirect()->route('admin.index_users');
     }
@@ -63,6 +66,7 @@ class UserRequestController extends Controller
             'approved' => 1,
         ]);
         //dd($request);
+        UserActionLog::authorize($user);
        
         
         event(new Registered($user));
@@ -76,7 +80,5 @@ class UserRequestController extends Controller
         return redirect()->route('admin.index_requisicoes');
         
     }
-
-
 
 }

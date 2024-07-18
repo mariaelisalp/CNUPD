@@ -40,7 +40,7 @@
                                    Data da Solicitação: {{\Carbon\Carbon::parse($user_request->created_at)->format('d/m/Y')}} <br>
                                    </p>
                               </div>
-                         </div>
+                         </div> 
                     </div>
 
                     <div class="col-md-4 mt-3 ms-3">
@@ -49,7 +49,7 @@
                               <div class="card-body">
                                    <p class="card-text">
                                    @foreach($files as $file)
-                                   <a href="storage/user_docs/{{$file->file}}" target="_blank">
+                                   <a href="{{ asset('storage/user_docs/' . $file->file) }}" target="_blank">
                                         <button class="btn btn-outline-primary">{{ $file->file }}</button>
                                    </a><br><br>
                                    @endforeach

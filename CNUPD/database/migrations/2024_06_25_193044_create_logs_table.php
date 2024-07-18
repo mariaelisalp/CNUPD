@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('people_logs', function (Blueprint $table) {
+        Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('people_id')->references('id')->on('people'); //ID DA PESSOA
+            $table->foreignId('people_id')->nullable()->references('id')->on('people'); //ID DA PESSOA
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); //ID DO USUÁRIO QUE REALIZOU A AÇÃO
-            $table->string('action'); //tipo de ação CREATE, UPDATE, DELETE
+            $table->unsignedBigInteger('target_user_id')->nullable();
+            $table->enum('action',['CREATE', 'READ', 'UPDATE', 'DELETE', 'LOGIN', 'AUTHORIZE', 'ENABLE', 'DISABLE']); //tipo de ação 
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('people_logs');
+        Schema::dropIfExists('logs');
     }
 };

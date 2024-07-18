@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\UserRequestController;
+use App\Http\Controllers\UserActionLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/index_users', [UserRequestController::class, 'index_users'])->name('admin.index_users');
     Route::post('/admin/index/disable/{user}', [UserRequestController::class, 'disableUser'])->name('admin.disableUser');
     Route::post('/admin/index/enable/{user}', [UserRequestController::class, 'enableUser'])->name('admin.enableUser');
+
+    Route::get('/admin/logs', [UserActionLogController::class, 'index'])->name('admin.index_logs');
+
 });
 
 Route::get('/dashboard', function () {
