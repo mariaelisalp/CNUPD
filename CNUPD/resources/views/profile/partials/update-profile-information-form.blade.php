@@ -18,26 +18,26 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Username')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->username)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="username" :value="__('Username')" />
+            <x-text-input id="username" name="username" type="text" class="mt-1 block w-full" :value="old('username', $user->username)" required autofocus autocomplete="username" />
+            <x-input-error class="mt-2" :messages="$errors->get('username')" />
         </div>
 
         <div>
-            <x-input-label for="last_name" :value="__('Name')" />
-            <x-text-input id="last_name" name="last_name" type="text" class="mt-1 block w-full" :value="old('full_name', $user->full_name)" required autofocus autocomplete="name" />
+            <x-input-label for="full_name" :value="__('Name')" />
+            <x-text-input id="full_name" name="full_name" type="text" class="mt-1 block w-full" :value="old('full_name', $user->full_name)" required autofocus autocomplete="full_name" />
             <x-input-error class="mt-2" :messages="$errors->get('full_name')" />
         </div>
 
         <div>
             <x-input-label for="position" :value="__('Cargo')" />
-            <x-text-input id="position" name="position" type="text" class="mt-1 block w-full" :value="old('position', $user->position)" required autofocus autocomplete="name" />
+            <x-text-input id="position" name="position" type="text" class="mt-1 block w-full" :value="old('position', $user->position)" required autofocus autocomplete="position" />
             <x-input-error class="mt-2" :messages="$errors->get('position')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="email" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -59,6 +59,22 @@
             @endif
         </div>
 
+        <div>
+            <x-select-option id="state" name="state" label="Estado" class="block mt-1 w-1/2">
+                <option value="">-</option>
+                    @foreach($states as $id => $abbr)
+                        <option value="{{ $id }}" {{ old('state', $state->id) == $id ? 'selected' : ''}}>{{$abbr}}</option>
+                    @endforeach
+            </x-select-option>
+            <x-input-error class="mt-2" :messages="$errors->get('state')" />
+        </div>
+
+        <div>
+            <x-select-option id="city" name="city" label="Cidade" class="block mt-1 w-1/2">
+            <option value="{{ $user->city_id }}" selected>{{ $city->name }}</option>
+            </x-select-option>
+        </div>
+
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
@@ -75,4 +91,47 @@
 
        
     </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#state').on('change', function(){
+                    var state_id = $(this).val();
+                    if(state_id){
+                        $.ajax({
+                            url: '/pessoas/cadastrar/buscar-cidades/' + state_id,
+                            type: 'GET',
+                            dataType: 'json',
+                            success:function(data){
+                                $('#city').empty();
+                                $('#city').append('<option value="" selected>Selecione uma cidade</option>');
+                                $.each(data, function(id, city){
+                                    $('#city').append('<option value="'+ id +'">'+ city +'</option>');
+                                });
+                                $('#city').prop('disabled', false);
+
+                                // Preencher o campo de cidade com o valor existente do banco de dados
+                                var city_id = '{{ old('city' , $user->city_id) }}';
+                                var city_name = '{{ $city->name }}';
+                                if (city_id && city_name) {
+                                    $('#city').val(city_id); 
+                                }
+                            }
+                        });
+                    } else {
+                        $('#city').empty();
+                        $('#city').prop('disabled', true);
+                    }
+                });
+                $('#state').trigger('change');
+
+            });
+        </script>
+
+        <script>
+            $('form').on('submit', function() {
+             console.log('Formulário enviado!');
+             });
+
+        </script>
 </section>

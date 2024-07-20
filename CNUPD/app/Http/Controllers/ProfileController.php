@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\State;
 use App\Models\City;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
@@ -18,9 +19,22 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        $states = State::all()->pluck('abbr','id');
+        $city = $user->city;
+        $state = $city->state;
+
         return view('profile.edit', [
-            'user' => $request->user()
+            'user' => $request->user(),
+            'states' => $states,
+            'city' => $city,
+            'state' => $state
         ]);
+    }
+
+    public function searchCities($state_id){
+        $cities = City::cities($state_id);
+        return response()->json($cities);
     }
 
     /**
@@ -28,13 +42,13 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $request->validated();
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
-
-        $request->user()->save();
+        User::updateUser($request,$user);
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }

@@ -35,4 +35,9 @@ class City extends Model
     public function users(){
         return $this->hasMany(User::class);
     }
+
+    public static function cities($state_id){
+        return $cities = City::where('state_id', $state_id)->pluck('name', 'id');
+        
+    }
 }
