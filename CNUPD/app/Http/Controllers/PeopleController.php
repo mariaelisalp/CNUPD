@@ -50,7 +50,7 @@ class PeopleController extends Controller
 
     //procura cidades no banco de acordo com estado selecionado
     public function searchCities($state_id){
-        $cities = City::where('state_id', $state_id)->pluck('name', 'id');
+        $cities = City::cities($state_id);
         return response()->json($cities);
     }
 

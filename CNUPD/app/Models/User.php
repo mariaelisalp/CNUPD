@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Http\Request;
+
 
 class User extends Authenticatable
 {
@@ -65,5 +67,17 @@ class User extends Authenticatable
     public static function getAll(){
         $users = User::where('admin', false)->get();
         return $users;
+    }
+
+    public static function updateUser(Request $request, $user){
+        $user->username = $request->input('username');
+        $user->full_name = $request->input('full_name');
+        $user->position = $request->input('position');
+        $user->email = $request->input('email');
+
+        if ($request->has('city')) {
+            $user->city_id = $request->input('city');
+        }
+        $user->save();
     }
 }
