@@ -47,7 +47,16 @@
                     </div>
                 </div>
             </div>
+
+        </div><br><br>
+
+        <div class="text-center">
+                
+            <img src="{{asset('logo.png')}}" alt="" style="height: 100px; width: auto;">
+                
         </div>
-</div><br><br><br><br><br><br>
+
+    
+</div><br><br><br>
 
 @endsection

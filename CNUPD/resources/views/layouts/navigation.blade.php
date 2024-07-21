@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ '/' }}">
-                        CNUPD
+                        <img src="{{asset('logoVerde.png')}}" style="height: 40px; width: auto;" alt="">
                     </a>
                 </div>
 

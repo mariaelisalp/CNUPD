@@ -21,11 +21,12 @@ class UserApproval
         $user = User::where('email', $request->email)->first();
         if(!empty($user_request)){
             if(!$user_request->approved){
-                return redirect()->back()->with('erro','Seu cadastro está em análise. O prazo é de 24 a 48 horas.');
+                session()->flash('error','Seu cadastro está em análise. O prazo é de 24 a 48 horas.');
+                return redirect()->back();
             }
             if(!empty($user)){
                 if($user_request->approved AND (!$user->approved)){
-                    session()->flash('message', 'Entre em contato com o administrador do seu setor para saber como prosseguir.');
+                    session()->flash('warning', 'Entre em contato com o administrador do seu setor para saber como prosseguir.');
                     return redirect()->back();
                 }
             }

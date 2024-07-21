@@ -109,15 +109,44 @@
           </div>
 
           <div class="d-inline-block">
-               <form action="{{route('people.delete', ['people' => $people->id])}}" method="POST">
+               <form id="deleteForm" action="{{route('people.delete', ['people' => $people->id])}}" method="POST">
                     @csrf
                     @method('delete')
 
-                    <button type="submit" class="btn btn-danger" onclick= "return confirm('Tem certeza que deseja apagar esse registro?')">Excluir</button>
+                    <button type="button" id="deleteButton" class="btn btn-danger">Excluir</button>
                </form>
           </div><br><br><br>
           
      </div>
+
+     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Você tem certeza que deseja excluir esse registro?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Não será possível desfazer essa operação.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+                    <button class="btn btn-danger" type="button" id="confirmSubmit">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script>
+          $('#deleteButton').on('click', function() {
+                $('#confirmationModal').modal('show');
+            });
+
+            $('#confirmSubmit').on('click', function() {
+                $('#deleteForm').submit();
+            });
+     </script>
     
 
 @endsection

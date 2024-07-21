@@ -49,10 +49,15 @@
     </form>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    @if(session('message'))
+    @if(session('warning') || session('error'))
         <script>
             $(document).ready(function() {
-                $('#blockedModal').modal('show');
+                if ("{{ session('warning') }}") {
+                    $('#blockedModal').modal('show');
+                }
+                if ("{{ session('error') }}") {
+                    $('#errorModal').modal('show');
+                }
             });
         </script>
     @endif
@@ -66,7 +71,24 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>{{ session('message') }}</p>
+                    <p>{{ session('warning') }}</p>
+                </div>
+                <div class="modal-footer">
+                    <x-close-button type="button" data-bs-dismiss="modal">Fechar</x-close-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="blockedModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="blockedModalLabel">Solicitação em análise</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ session('error') }}</p>
                 </div>
                 <div class="modal-footer">
                     <x-close-button type="button" data-bs-dismiss="modal">Fechar</x-close-button>
