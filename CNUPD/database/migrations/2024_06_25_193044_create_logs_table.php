@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('people_id')->nullable()->references('id')->on('people'); //ID DA PESSOA
+            $table->foreignId('people_id')->nullable()->references('id')->on('people')->onDelete('cascade'); //ID DA PESSOA
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); //ID DO USUÁRIO QUE REALIZOU A AÇÃO
             $table->unsignedBigInteger('target_user_id')->nullable();
             $table->enum('action',['CREATE', 'READ', 'UPDATE', 'DELETE', 'LOGIN', 'AUTHORIZE', 'ENABLE', 'DISABLE']); //tipo de ação 
