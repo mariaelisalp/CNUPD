@@ -65,9 +65,9 @@ class RegisteredUserController extends Controller
         }
         
         event(new Registered($userRequest));
-
+        $request->session()->flash('message', 'Caso sua solicitação seja aceita ou rejeitada, você receberá um aviso em seu email.');
         //Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->back();
     }
 }

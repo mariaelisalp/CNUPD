@@ -18,7 +18,7 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <div>
                 <a href="/">
-                    <h2>CNUPD</h2>
+                    <img src="{{asset('logo.png')}}" alt="" style="height: 100px; width: auto;">
                 </a>
             </div>
 

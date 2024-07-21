@@ -2,7 +2,58 @@
 @section('title', 'Registrar')
 @section('content')
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @if(session('message'))
+        <script>
+            $(document).ready(function() {
+                $('#exampleModal').modal('show');
+                
+            });
+
+        </script>
+    @endif
+  
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Solicitação enviada com sucesso.</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            <div class="modal-body">
+                {{ session('message') }} <br>
+                <div class="float-end">Atenciosamente, CNUPD.</div><br>
+
+            </div>
+                <div class="modal-footer">
+                    <x-close-button type="button" data-bs-dismiss="modal">Fechar</x-close-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Você tem certeza que deseja solicitar acesso?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Ao enviar o formulário não será possível alterar as informações.
+                </div>
+                <div class="modal-footer">
+                    <x-danger-button type="button" data-bs-dismiss="modal">Cancelar</x-danger-button>
+                    <x-primary-button type="button" id="confirmSubmit">Confirmar</x-primary-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <form id="registrationForm" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
 
         <!-- Name -->
@@ -27,10 +78,18 @@
         </div>
 
         <!-- Position -->
+   
+
         <div class="mt-4">
-            <x-input-label for="position" :value="__('Cargo')" />
-            <x-text-input id="position" class="block mt-1 w-full" type="text" name="position" :value="old('position')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('position')" class="mt-2" />
+            <x-select-option id="position" name="position" label="Cargo" class="block mt-1 w-full">
+                <option value="Delegado" {{ old('position') == 'Delegado' ? 'selected' : '' }}>Delegado</option>
+                <option value="Sargento" {{ old('position') == 'Sargento' ? 'selected' : '' }}>Sargento</option>
+                <option value="Oficial de Polícia" {{ old('position') == 'Oficial de Polícia' ? 'selected' : '' }}>Oficial de Polícia</option>
+                <option value="Inspetor" {{ old('position') == 'Inspetor' ? 'selected' : '' }}>Inspetor</option>
+                <option value="'Investigador" {{ old('position') == 'Investigador' ? 'selected' : '' }}>Investigador</option>
+                <option value="Escrivão de Polícia" {{ old('position') == 'Escrivão de Polícia' ? 'selected' : '' }}>Escrivão de Polícia</option>
+                <option value="Outro Cargo" {{ old('position') == 'Outro Cargo' ? 'selected' : '' }}>Outro cargo</option>   
+            </x-select-option>
         </div>
 
         <!-- States and Cities -->
@@ -86,7 +145,7 @@
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ms-4">
+            <x-primary-button type="button" class="ms-4" id="requestAccessButton">
                 {{ __('Solicitar acesso ao sistema') }}
             </x-primary-button>
         </div>
@@ -174,6 +233,16 @@
                 }
             });
 
+         </script>
+
+         <script>
+            $('#requestAccessButton').on('click', function() {
+                $('#confirmationModal').modal('show');
+            });
+
+            $('#confirmSubmit').on('click', function() {
+                $('#registrationForm').submit();
+            });
          </script>
 
 </x-guest-layout><br><br>
