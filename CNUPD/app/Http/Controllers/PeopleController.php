@@ -60,18 +60,13 @@ class PeopleController extends Controller
         $validatedData = $request->validated();
         $fileNameToStore = People::uploadImage($request);
 
-        // Adicione os campos adicionais ao array de dados validados
         $validatedData['city_id'] = $request->input('city');
         $validatedData['image'] = $fileNameToStore;
 
-        // Crie o registro e obtenha a instância criada
         $people = People::create($validatedData);
-
 
         $mensagem = 'Registro criado com sucesso.';
 
-        // Armazenar a mensagem na sessão
-        $request->session()->flash('success', $mensagem);
         Log::channel('user_actions')->info('Record created', ['user_id' => auth()->user()->id, 'record_id' => $people->id]);
         UserActionLog::create_log($people);
 
@@ -122,8 +117,6 @@ class PeopleController extends Controller
         $request -> validated();
 
         $fileNameToStore = People::updateImage($request, $people);
-
-        $people = People::findOrFail($people->id);
         $data = $request->all();
 
         $data['city_id'] = $request->input('city');

@@ -30,9 +30,15 @@
         </div>
 
         <div>
-            <x-input-label for="position" :value="__('Cargo')" />
-            <x-text-input id="position" name="position" type="text" class="mt-1 block w-full" :value="old('position', $user->position)" required autofocus autocomplete="position" />
-            <x-input-error class="mt-2" :messages="$errors->get('position')" />
+            <x-select-option id="position" name="position" label="Cargo" class="block mt-1 w-full">
+                <option value="Delegado" {{ old('position', $user->position) == 'Delegado' ? 'selected' : '' }}>Delegado</option>
+                <option value="Sargento" {{ old('position', $user->position) == 'Sargento' ? 'selected' : '' }}>Sargento</option>
+                <option value="Oficial de Polícia" {{ old('position', $user->position) == 'Oficial de Polícia' ? 'selected' : '' }}>Oficial de Polícia</option>
+                <option value="Inspetor" {{ old('position', $user->position) == 'Inspetor' ? 'selected' : '' }}>Inspetor</option>
+                <option value="'Investigador" {{ old('position', $user->position) == 'Investigador' ? 'selected' : '' }}>Investigador</option>
+                <option value="Escrivão de Polícia" {{ old('position', $user->position) == 'Escrivão de Polícia' ? 'selected' : '' }}>Escrivão de Polícia</option>
+                <option value="Outro Cargo" {{ old('position', $user->position) == 'Outro Cargo' ? 'selected' : '' }}>Outro cargo</option>   
+            </x-select-option>
         </div>
 
         <div>

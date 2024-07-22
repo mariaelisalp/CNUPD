@@ -6,7 +6,7 @@
     <br><br><div class="container"></div>
             <div class="container">
                 <img src="" alt="">
-                <h5 class="text-bg-primary p-3"> Registro de pessoas desaparecidas e não identificadas </h5>
+                <h5 class="p-3 mb-2 bg-success-subtle text-success-emphasis"> Registro de pessoas desaparecidas e não identificadas </h5>
                 <p style="text-align: justify;">
                 A manutenção de um banco de cadastros de pessoas desaparecidas e não identificadas é de 
                 extrema importância. Esse registro centralizado agiliza investigações, permitindo a rápida 
@@ -26,4 +26,5 @@
                     
                 </div>
             </div><br><br><br><br><br><br>
+@include('parciais.footer')
 @endsection

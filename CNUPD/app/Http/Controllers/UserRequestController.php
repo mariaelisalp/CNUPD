@@ -24,7 +24,7 @@ class UserRequestController extends Controller
         $user->approved = false;
         $user->save();
         UserActionLog::manageAccess($user, 'DISABLE');
-        session()->flash('message', 'Usuário desabilitado com sucesso!');
+        session()->flash('message1', 'Usuário desabilitado com sucesso!');
         return redirect()->route('admin.index_users');
     }
 
@@ -32,43 +32,31 @@ class UserRequestController extends Controller
         $user->approved = true;
         $user->save();
         UserActionLog::manageAccess($user, 'ENABLE');
-        session()->flash('message', 'Usuário habilitado com sucesso!');
+        session()->flash('message2', 'Usuário habilitado com sucesso!');
         return redirect()->route('admin.index_users');
     }
 
     public function index_requisicoes(Request $request){
-        $user_requests = UserRequest::where('approved', false)->get();
+        $user_requests = UserRequest::getRequests();
        return view('admin.index_requisicoes',compact('user_requests'));
     }
 
     public function exibe_requisicao(int $id){
-        $user_request = UserRequest::find($id);
-        $cidade = City::find($user_request->city_id);
-        $estado = State::find($cidade->state_id);
-        $files = UserFile::where('user_request_id', $id)->get();
-        return view('admin.show_requisicao', compact('user_request', 'cidade', 'estado','files'));
+        $user_request = UserRequest::findRequest($id);
+        return view('admin.show_requisicao', $user_request);
     }
+    
     public function aprova_requisicao(int $id){
         
         $request = UserRequest::find($id);
         $request->notify(new ApprovalNotification());
-        $request->approved = 1;
         $request->save();
         
-        $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'city_id' => $request->city_id,
-            'password' => $request->password,
-            'full_name' => $request->full_name,
-            'position' => $request->position,
-            'authority' => 1,
-            'approved' => 1,
-        ]);
-        //dd($request);
+        $user = (new UserRequest())->approve($request);
+
         UserActionLog::authorize($user);
        
-        
+        session()->flash('message', 'Solicitação aceita');
         event(new Registered($user));
         return redirect()->route('admin.index_requisicoes');
     }
@@ -77,6 +65,7 @@ class UserRequestController extends Controller
         $request = UserRequest::find($id);
         $request->notify(new DenialNotification());
         $request->delete();
+        session()->flash('warning', 'Solicitação rejeitada');
         return redirect()->route('admin.index_requisicoes');
         
     }

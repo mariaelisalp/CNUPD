@@ -51,18 +51,7 @@ class RegisteredUserController extends Controller
             'city' => ['required', 'string'],
         ]);
 
-        $userRequest = UserRequest::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'city_id' => $request->input('city'),
-            'password' => Hash::make($request->password),
-            'full_name' => $request->full_name,
-            'position' => $request->position,
-        ]);
-        //dd($request);
-        if($request->hasFile('files') != null){
-            UserRequest::uploadDocs($request, $userRequest);
-        }
+        $userRequest = (new UserRequest())->createRequest($request);
         
         event(new Registered($userRequest));
         $request->session()->flash('message', 'Caso sua solicitação seja aceita ou rejeitada, você receberá um aviso em seu email.');

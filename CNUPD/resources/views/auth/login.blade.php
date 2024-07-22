@@ -2,8 +2,6 @@
 @section('title', 'Login')
 @section('content')
 <x-guest-layout>
-
-
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <form method="POST" action="{{ route('login') }}">
@@ -98,4 +96,5 @@
     </div>
 
 </x-guest-layout>
+@include('parciais.footer')
 @endsection

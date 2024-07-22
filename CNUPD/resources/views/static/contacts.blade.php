@@ -7,7 +7,7 @@
             <div class="container">
                 <img src="" alt="">
 
-                <h3 class="text-bg-warning p-3">Fale Conosco</h3><br>
+                <h3 class="p-3 mb-2 bg-secondary-subtle text-secondary-emphasis">Fale Conosco</h3><br>
 
                 <div class="text-bg-light p-3">Contatos</div><br>
                 <p>
@@ -32,4 +32,5 @@
 
 
             </div><br><br><br><br><br><br>
+@include('parciais.footer')
 @endsection

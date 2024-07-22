@@ -9,17 +9,18 @@
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
-        @endif
+        @endif <br>
 
         <div class="alert alert-secondary" role="alert">
             Os dados referentes a pessoas não identificadas são informações aproximadas.
         </div>
 
-        <br><br><h3 class="text-bg-primary p-3">
+        <br><h3 class="p-3 mb-2 bg-body-secondary">
                 Pessoas Não Identificadas
             </h3><br>
-            <h5>Filtrar Pesquisa</h5>
-        <div>
+            
+        <div class="shadow-none p-3 mb-5 bg-body-tertiary rounded">
+        <h5>Filtrar Pesquisa</h5>
             <form action="{{route('people.index_nao_identificados')}}" method="GET">
                 <div class="col-md-8">
                     <label for="search" class="form-label">Pesquisar</label>
@@ -39,7 +40,7 @@
                 </div>
             </form>
         </div>
-    </div><br>
+    </div>
     <hr style="margin-left: auto; margin-right: auto; height: 1px; color: #000; background-color: #000; width: 80%;">
 
     @if($people->isEmpty())
@@ -48,7 +49,7 @@
         </div>
     @else
         <div class="container">
-            <table class="table">
+            <table class="table table-bordered">
             <thead>
                 <tr>
                 <th scope="col">#</th>
@@ -92,5 +93,5 @@
         <button class="btn btn-warning btn-lg">Cadastrar Pessoa</button>
         </a><br><br>
     </div>
-
+@include('parciais.footer')
 @endsection

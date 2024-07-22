@@ -72,4 +72,4 @@
     @endif
 
 </x-app-layout>
-@include('parciais.footer')
+

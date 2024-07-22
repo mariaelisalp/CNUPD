@@ -94,12 +94,17 @@ class UserActionLog extends Model
         ]);
     }
 
-    public function getAll($filters){
+    public function getAll($filters, $period, $now){
         if($filters){
             return DB::table('logs')->whereIn('action', $filters)->paginate(20);
         }
         else{
             return DB::table('logs')->paginate(20);
+        }
+
+        if ($period) {
+            $startDate = now()->subDays($period)->startOfDay();
+            return DB::table('logs')->where('created_at', '>=', $startDate);
         }
         
     }

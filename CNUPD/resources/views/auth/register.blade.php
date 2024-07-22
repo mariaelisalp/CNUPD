@@ -135,10 +135,19 @@
 
         <!-- Upload -->
         <div class="mt-4">
-        <input type="file" id="files" class="file-input" name="files[]" onchange="newInput(this)" multiple="multiple"><br>
+            <x-input-label for="files" :value="__('Upload de Documentos')" />
+            <div class="flex flex-col items-center justify-center w-full">
+                    <label class="flex flex-col items-center w-full px-4 py-6 bg-white rounded-lg shadow-md tracking-wide uppercase border border-blue cursor-pointer hover:bg-gray-200 hover:text-gray-700 text-gray-600 ease-linear transition-all duration-150">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+                        </svg>
+                        <span class="mt-2 text-sm leading-normal">Selecione os arquivos</span>
+                        <input type="file" id="files" name="files[]" class="hidden" onchange="newInput(this)" multiple>
+                    </label>
+                    <ul id="dp-files" class="list-disc pl-5 mt-2 w-full"></ul>
+            </div>
             
         </div>
-        <ul id="dp-files"></ul>
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
@@ -245,5 +254,7 @@
             });
          </script>
 
-</x-guest-layout><br><br>
+</x-guest-layout>
+@include('parciais.footer')
 @endsection
+

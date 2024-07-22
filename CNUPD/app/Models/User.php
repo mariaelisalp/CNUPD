@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 
@@ -65,7 +66,7 @@ class User extends Authenticatable
     }
 
     public static function getAll(){
-        $users = User::where('admin', false)->get();
+        $users = DB::table('users')->where('admin', false)->paginate(10);
         return $users;
     }
 

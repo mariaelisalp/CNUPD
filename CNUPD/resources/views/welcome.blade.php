@@ -5,8 +5,8 @@
 @section('content')
 
 <div class="container" style="max-width: 900px;">
-    <br><br><h3 class="text-bg-primary p-3">O que é CNUPD?</h3>
-        <p style="text-align: justify;">
+    <br><br><h3 class="text-bg-light p-3">O que é CNUPD?</h3>
+        <p class="shadow-none p-3 mb-5 bg-body-tertiary rounded" style="text-align: justify;">
         O CNUPD (Cadastro Nacional de Pessoas Desaparecidas) é uma iniciativa essencial que visa centralizar 
         e facilitar informações cruciais sobre pessoas desaparecidas e não identificadas em um esforço para 
         reunir famílias e oferecer suporte a investigações. Este site serve como uma plataforma abrangente 
@@ -22,28 +22,36 @@
 
         <div class="row">
             <div class="col-md-4 mr-3">
-                <div class="card" style="width: 14rem;">
-                    <img src="/storage/images/policial.png" alt="" class="img-fluid">
-                    <div class="card-body">
-                        <h5 class="card-title">Autoridades</h5>
+                <div class="card" style="width: 14rem; border-width: 2px; border-color: black">
+                    <img src="{{asset('icon-imgs/policial.png')}}" alt="" class="img-fluid">
+                    <div class="card-header" style="background-color: #F8F8FF">
+                        <div class="text-center">
+                            <h5 class="card-title">Autoridades</h5>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
 
             <div class="col">
-                <div class="card" style="width: 14rem;">
-                    <img src="/storage/images/pessoas-juntas.png" alt="" class="img-fluid">
-                    <div class="card-body">
-                        <h5 class="card-title"> Público </h5>
+                <div class="card" style="width: 14rem; border-width: 2px; border-color: black">
+                    <img src="{{asset('icon-imgs/pessoas-juntas.png')}}" alt="" class="img-fluid">
+                    <div class="card-header" style="background-color: #F8F8FF">
+                        <div class="text-center">
+                            <h5 class="card-title"> Público </h5>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
 
             <div class="col">
-                <div class="card" style="width: 14rem;">
-                    <img src="/storage/images/utilizador.png" alt="" class="img-fluid">
-                    <div class="card-body">
-                        <h5 class="card-title">Demais autorizados </h5>
+                <div class="card" style="width: 14rem; border-width: 2px; border-color: black">
+                    <img src="{{asset('icon-imgs/utilizador.png')}}" alt="" class="img-fluid">
+                    <div class="card-header" style="background-color: #F8F8FF">
+                        <div class="text-center">
+                            <h5 class="card-title">Demais autorizados </h5>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -58,5 +66,5 @@
 
     
 </div><br><br><br>
-
+@include('parciais.footer')
 @endsection

@@ -245,5 +245,5 @@
         </script>
 
     </div>
-       
+@include('parciais.footer')
 @endsection

@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             StatesSeeder::class,
             CitiesSeeder::class,
             AdminSeeder::class,
+            PeopleSeeder::class,
         ]);
     }
 }

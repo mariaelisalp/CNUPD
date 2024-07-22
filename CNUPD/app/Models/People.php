@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 use App\Http\Requests\StorePeopleRequest;
 
 class People extends Model
@@ -103,6 +104,7 @@ class People extends Model
         $city = $people->city;
         $contactInfo = null;
         $state = null;
+        $currentAge = Carbon::parse($people->birth_date)->age;
 
         if ($city) {
             // Acessa o estado associado à cidade
@@ -110,7 +112,8 @@ class People extends Model
             $contactInfo = $city->city_station->station; 
         }
 
-        return compact('city', 'state', 'contactInfo');
+        return compact('city', 'state', 'contactInfo', 'currentAge');
     }
+
 
 }  
