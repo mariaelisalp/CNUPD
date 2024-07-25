@@ -86,7 +86,9 @@
                 <option value="Sargento" {{ old('position') == 'Sargento' ? 'selected' : '' }}>Sargento</option>
                 <option value="Oficial de Polícia" {{ old('position') == 'Oficial de Polícia' ? 'selected' : '' }}>Oficial de Polícia</option>
                 <option value="Inspetor" {{ old('position') == 'Inspetor' ? 'selected' : '' }}>Inspetor</option>
-                <option value="'Investigador" {{ old('position') == 'Investigador' ? 'selected' : '' }}>Investigador</option>
+                <option value="Cientista Forense" {{ old('position') == 'Cientista Forense' ? 'selected' : '' }}>Cientista Forense</option>
+                <option value="Perito Criminal" {{ old('position') == 'Perito Criminal' ? 'selected' : '' }}>Perito Criminal</option>
+                <option value="Investigador" {{ old('position') == 'Investigador' ? 'selected' : '' }}>Investigador</option>
                 <option value="Escrivão de Polícia" {{ old('position') == 'Escrivão de Polícia' ? 'selected' : '' }}>Escrivão de Polícia</option>
                 <option value="Outro Cargo" {{ old('position') == 'Outro Cargo' ? 'selected' : '' }}>Outro cargo</option>   
             </x-select-option>
@@ -162,6 +164,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script>
+            // função para tratar exibição de cidades e estados.
             $(document).ready(function() {
                 function loadCities(state_id, selected_city_id) {
                     if (state_id) {
@@ -187,13 +190,11 @@
                     }
                 }
 
-                // Quando o estado é mudado
                 $('#state').on('change', function() {
                     var state_id = $(this).val();
                     loadCities(state_id);
                 });
 
-                // Verifique se um estado já está selecionado ao carregar a página
                 var initial_state_id = $('#state').val();
                 var initial_city_id = $('#city').data('selected-city-id'); // Pegue o valor selecionado da cidade
 
@@ -254,7 +255,7 @@
             });
          </script>
 
-</x-guest-layout>
+</x-guest-layout><br>
 @include('parciais.footer')
 @endsection
 

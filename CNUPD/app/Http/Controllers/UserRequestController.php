@@ -50,7 +50,6 @@ class UserRequestController extends Controller
         
         $request = UserRequest::find($id);
         $request->notify(new ApprovalNotification());
-        $request->save();
         
         $user = (new UserRequest())->approve($request);
 

@@ -36,7 +36,9 @@ class DenialNotification extends Notification
     {
         return (new MailMessage)->error()->subject('CNUPD - Cadastro Reprovado')
         ->greeting('Olá.')
-        ->line('Sua solicitação foi reprovada na etapa de análise. Entre com um novo pedido, atentando-se as correções necessárias.')
+        ->line('Sua solicitação foi reprovada na etapa de análise pois você não 
+        apresenta os requisitos necessários para utilizar o sistema. Entre com um novo pedido, 
+        atentando-se as correções necessárias.')
         ->salutation('Sistema CNUPD');
     }
 

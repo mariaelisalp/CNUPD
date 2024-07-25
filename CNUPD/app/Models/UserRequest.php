@@ -82,6 +82,8 @@ class UserRequest extends Model
     }
 
     public function approve($request){
+        $request->approved = 1;
+        $request->save();
         
         $user = User::create([
             'username' => $request->username,

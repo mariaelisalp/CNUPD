@@ -49,8 +49,10 @@
                 <div class="card-body">
                     @foreach($files as $file)
                     <a href="{{ asset('storage/user_docs/' . $file->file) }}" target="_blank">
-                         <button class="btn btn-outline-primary">{{ $file->file }}</button>
-                    </a><br><br>
+                        <div class="text-center">
+                            <button class="btn btn-outline-primary">{{ $file->file }}</button>
+                        </div>  
+                    </a><br>
                     @endforeach
                 </div>
             </div>

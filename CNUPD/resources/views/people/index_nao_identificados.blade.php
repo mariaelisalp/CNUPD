@@ -49,39 +49,42 @@
         </div>
     @else
         <div class="container">
-            <table class="table table-bordered">
-            <thead>
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Data</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Idade</th>
-                <th scope="col">Sexo</th>
-                <th scope="col">Cidade</th>
-                <th scope="col">Estado</th>
-                </tr>
-            </thead>
-            <tbody>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Idade</th>
+                    <th scope="col">Sexo</th>
+                    <th scope="col">Cidade</th>
+                    <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-            @foreach($people as $person)
-                <tr>
-                    <td>{{$person->id}}</td>
-                    <td>{{\Carbon\Carbon::parse($person->time_date)->format('d/m/Y')}}</td>
-                    <td>{{$person->name}}</td>
-                    <td>{{$person->age}}</td>
-                    <td>{{$person->gender}}</td>
-                    <td>{{$person->city}}</td>
-                    <td>{{$person->state}}</td>
-                    <td><a href="{{route('people.show', ['people' => $person->id])}}">
-                        <button class="btn btn-dark">Visualizar</button>
-                    </a></td>
-                </tr>
+                @foreach($people as $person)
+                    <tr>
+                        <td>{{$person->id}}</td>
+                        <td>{{\Carbon\Carbon::parse($person->time_date)->format('d/m/Y')}}</td>
+                        <td>{{$person->name}}</td>
+                        <td>{{$person->age}}</td>
+                        <td>{{$person->gender}}</td>
+                        <td>{{$person->city}}</td>
+                        <td>{{$person->state}}</td>
+                        <td><a href="{{route('people.show', ['people' => $person->id])}}">
+                            <button class="btn btn-dark">Visualizar</button>
+                        </a></td>
+                    </tr>
+                
+                @endforeach
             
-            @endforeach
-        
-                </tr>
-            </tbody>
-            </table><br>
+                    </tr>
+                </tbody>
+                </table><br>
+            </div>
+            
         </div>
 
         <div class="pagination">

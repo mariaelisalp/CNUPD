@@ -25,6 +25,8 @@
                     </a>
                     
                 </div>
-            </div><br><br><br><br><br><br>
-@include('parciais.footer')
+            </div><br>
+<footer style="position:fixed; bottom: 0; width: 100%;">
+@include('parciais.footer')  
+</footer>
 @endsection

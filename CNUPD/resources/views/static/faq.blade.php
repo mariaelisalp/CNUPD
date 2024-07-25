@@ -44,7 +44,9 @@
                     </div>
                 </div>
             </div>
-        </div> <br><br>
+        </div>
 
- @include('parciais.footer')       
+<footer style="position:fixed; bottom: 0; width: 100%;">
+@include('parciais.footer') 
+</footer>     
 @endsection

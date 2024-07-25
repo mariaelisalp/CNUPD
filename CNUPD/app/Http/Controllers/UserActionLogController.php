@@ -17,11 +17,12 @@ class UserActionLogController extends Controller
 
         $logs_details = UserActionLog::getDetails($logs);
 
-
         return view('admin.index_logs', ['logs' => $logs,
          'logs_details' => $logs_details,
-         'selectedFilters' => $filters,
-        'selectedPeriod' => $period]);
+         'filters' => $filters,
+         'period' => $period
+        ]);
+        
     
     }
 }

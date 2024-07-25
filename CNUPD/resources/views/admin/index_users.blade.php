@@ -9,51 +9,54 @@
             Lista de usuários
         </h3><br>
         <div class="container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Data de Cadastro</th>
-                        <th>Status</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $user)
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->full_name }}</td>
-                            <td>{{ $user->created_at }}</td>
-                            <td>
-                                @if($user->approved == 1)
-                                <p>Habilitado</p>
-                                @else
-                                <p>Desabilitado</p>
-                                @endif
-                            </td>
-                            <td>
-                                @if($user->approved == 1)
-                                    <form action="{{ route('admin.disableUser', $user->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger">Desabilitar</button>
-                                    </form>
-                                @else
-                                    <form action="{{ route('admin.enableUser', $user->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success">Habilitar</button>
-                                    </form>
-                                @endif
-                    
-                            </td>
-                            
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Data de Cadastro</th>
+                            <th>Status</th>
+                            <th>Ações</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <div class="pagination">
-                {{ $users->onEachSide(0)->links() }}
-            </div><br>
+                    </thead>
+                    <tbody>
+                        @foreach($users as $user)
+                            <tr>
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->full_name }}</td>
+                                <td>{{ $user->created_at }}</td>
+                                <td>
+                                    @if($user->approved == 1)
+                                    <p>Habilitado</p>
+                                    @else
+                                    <p>Desabilitado</p>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($user->approved == 1)
+                                        <form action="{{ route('admin.disableUser', $user->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Desabilitar</button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('admin.enableUser', $user->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success">Habilitar</button>
+                                        </form>
+                                    @endif
+                        
+                                </td>
+                                
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    {{ $users->onEachSide(0)->links() }}
+                </div><br>
+            </div>
+            
         </div>
         
     </div>

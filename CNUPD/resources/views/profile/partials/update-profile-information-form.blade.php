@@ -35,6 +35,8 @@
                 <option value="Sargento" {{ old('position', $user->position) == 'Sargento' ? 'selected' : '' }}>Sargento</option>
                 <option value="Oficial de Polícia" {{ old('position', $user->position) == 'Oficial de Polícia' ? 'selected' : '' }}>Oficial de Polícia</option>
                 <option value="Inspetor" {{ old('position', $user->position) == 'Inspetor' ? 'selected' : '' }}>Inspetor</option>
+                <option value="Cientista Forense" {{ old('position', $user->position) == 'Cientista Forense' ? 'selected' : '' }}>Cientista Forense</option>
+                <option value="Perito Criminal" {{ old('position', $user->position) == 'Perito Criminal' ? 'selected' : '' }}>Perito Criminal</option>
                 <option value="'Investigador" {{ old('position', $user->position) == 'Investigador' ? 'selected' : '' }}>Investigador</option>
                 <option value="Escrivão de Polícia" {{ old('position', $user->position) == 'Escrivão de Polícia' ? 'selected' : '' }}>Escrivão de Polícia</option>
                 <option value="Outro Cargo" {{ old('position', $user->position) == 'Outro Cargo' ? 'selected' : '' }}>Outro cargo</option>   
