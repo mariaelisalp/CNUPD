@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\State;
 use App\Models\City;
 use App\Models\User;
+use App\Models\UserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
@@ -63,10 +64,11 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+        $user_request = UserRequest::where('username', $user->username);
 
         Auth::logout();
-
         $user->delete();
+        $user_request->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

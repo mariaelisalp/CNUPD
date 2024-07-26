@@ -22,7 +22,8 @@
                 </span>  
             @endif
 
-            <br><p style="color: red;">Campos marcados com * são obrigatórios.</p><br>
+            <br><p style="color: red;">Campos marcados com * são obrigatórios.</p>
+            <p>Caso não haja iformação específica, preencha com "Não informado."</p><br>
             <form action="{{route('people.store')}}" class="row g-3" method= 'POST' enctype="multipart/form-data">
             @csrf
                 

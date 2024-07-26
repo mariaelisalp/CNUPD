@@ -18,13 +18,15 @@
                 nas ações voltadas para localizar pessoas desaparecidas e identificar aquelas encontradas 
                 sem identificação.
                 </p><br><br>
-
+                
+                @if(auth()->user())
                 <div class="container" style= "margin-left: auto; margin-right: auto;">
                     <a href="{{'/pessoas/cadastrar'}}">
                         <button class="btn btn-warning btn-lg">Registrar Pessoa</button>
                     </a>
                     
                 </div>
+                @endif
             </div><br>
 <footer style="position:fixed; bottom: 0; width: 100%;">
 @include('parciais.footer')  

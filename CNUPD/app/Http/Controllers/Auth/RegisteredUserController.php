@@ -49,6 +49,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'state' => ['required', 'string'],
             'city' => ['required', 'string'],
+            'files' => ['required', 'array', 'min:1']
         ]);
 
         $userRequest = (new UserRequest())->createRequest($request);

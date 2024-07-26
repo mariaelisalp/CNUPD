@@ -110,7 +110,7 @@
                </div>
 
                <div class="d-inline-block">
-                    <form action="{{route('people.delete', ['people' => $people->id])}}" method="POST">
+                    <form id="deleteForm" action="{{route('people.delete', ['people' => $people->id])}}" method="POST">
                     @csrf
                     @method('delete')
 
@@ -133,7 +133,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
-                    <button class="btn btn-danger" type="button" id="confirmSubmit">Excluir</button>
+                    <button class="btn btn-danger" type="button" id="confirmSubmit" >Excluir</button>
                 </div>
             </div>
         </div>

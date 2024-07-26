@@ -17,11 +17,13 @@
                     </x-nav-link>
                 </div>
 
+                @if(auth()->user()->admin)
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('admin.index_logs')" :active="request()->routeIs('admin.index.logs')">
                         {{ __('Atividade') }}
                     </x-nav-link>
                 </div>
+                @endif
 
             </div>
 

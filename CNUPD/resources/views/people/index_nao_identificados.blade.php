@@ -34,9 +34,6 @@
 
                 <div>
                     <button type= "submit" class="btn btn-primary">Pesquisar</button>
-                    <a href="{{route('people.index_nao_identificados')}}">
-                        <button class="btn btn-secondary">Limpar</button>
-                    </a>
                 </div>
             </form>
         </div>

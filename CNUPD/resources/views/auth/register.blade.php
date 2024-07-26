@@ -137,7 +137,16 @@
 
         <!-- Upload -->
         <div class="mt-4">
-            <x-input-label for="files" :value="__('Upload de Documentos')" />
+            <div class="inline-flex items-center">
+                <x-input-label for="files" :value="__('Upload de Documentos')" />
+                    <a data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                        <button type="button" class="ml-2 text-gray-500 hover:text-gray-700 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0ZM8.94 6.94a.75.75 0 1 1-1.061-1.061 3 3 0 1 1 2.871 5.026v.345a.75.75 0 0 1-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 1 0 8.94 6.94ZM10 15a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </a>
+            </div>
             <div class="flex flex-col items-center justify-center w-full">
                     <label class="flex flex-col items-center w-full px-4 py-6 bg-white rounded-lg shadow-md tracking-wide uppercase border border-blue cursor-pointer hover:bg-gray-200 hover:text-gray-700 text-gray-600 ease-linear transition-all duration-150">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -148,6 +157,7 @@
                     </label>
                     <ul id="dp-files" class="list-disc pl-5 mt-2 w-full"></ul>
             </div>
+             <x-input-error :messages="$errors->get('files')" class="mt-2" />
             
         </div>
 
@@ -161,6 +171,19 @@
             </x-primary-button>
         </div>
     </form>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Por que enviar documentos?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+           O envio de documentos é uma comprovação da sua identidade profissional, para que sua solicitação possa ser analisada corretamente.
+           Adicione quantos documentos achar necessário.
+            </div>
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script>

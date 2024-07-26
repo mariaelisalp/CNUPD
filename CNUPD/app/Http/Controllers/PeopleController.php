@@ -88,7 +88,9 @@ class PeopleController extends Controller
             'people' => $people,
         ], $show);
 
-        UserActionLog::read_log($people);
+        if(auth()->user()){
+            UserActionLog::read_log($people);
+        }
 
         if ($people->missing == 1) {
             return view('people.show_desaparecido', $details);

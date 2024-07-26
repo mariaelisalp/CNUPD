@@ -23,8 +23,10 @@
                                 <li><a class="dropdown-item" href="{{ '/pessoas/desaparecidos' }}">Desaparecidos</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{ '/pessoas/nao_identificados' }}">Não Identificados</a></li>
+                                @if(auth()->user())
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="{{ '/pessoas/cadastrar' }}">Fazer um registro</a></li>
+                                @endif
                             </ul>
                         </li>
 
@@ -48,7 +50,7 @@
                         @if (Route::has('login'))
                             @auth
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/dashboard') }}">Painél</a>
+                                    <a class="nav-link" href="{{ url('/dashboard') }}">Painel de Controle</a>
                                 </li>
                             @else
                                 <li class="nav-item">
