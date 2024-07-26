@@ -102,12 +102,11 @@
                </div>
 
                <br> Última Alteração: {{\Carbon\Carbon::parse($people->updated_at)->tz('America/Sao_Paulo')->format('d/m/Y H:m:s')}} <br><br>
-
+               @if(auth()->user()->admin || (auth()->user() && $permission))
                <div class="d-inline-block">
                     <a href="{{route('people.edit', ['people' => $people->id])}}"><button class="btn btn-warning">Editar</button></a>
 
                </div>
-
                <div class="d-inline-block">
                     <form id="deleteForm" action="{{route('people.delete', ['people' => $people->id])}}" method="POST">
                          @csrf
@@ -116,6 +115,7 @@
                          <button type="button" id="deleteButton" class="btn btn-danger">Excluir</button>
                     </form>
                </div><br><br><br>
+               @endif
           </div>
           
      </div>

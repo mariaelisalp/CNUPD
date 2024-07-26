@@ -65,6 +65,14 @@ class User extends Authenticatable
         return $this->admin;
     }
 
+    public static function getRegisters(User $user){
+        $logs = DB::table('logs')->where('user_id', $user->id)->where('action', 'CREATE')->get();
+        $peopleIds = $logs->pluck('people_id');
+        $people = DB::table('people')->whereIn('id', $peopleIds)->paginate(10);
+
+        return $people;
+    }
+
     public static function getAll(){
         $users = DB::table('users')->where('admin', false)->paginate(10);
         return $users;

@@ -94,6 +94,12 @@ class UserActionLog extends Model
         ]);
     }
 
+    public static function getRegistro($id){
+        $user = auth()->user();
+        $log = DB::table('logs')->where('user_id', $user->id)->where('people_id', $id)->where('action', 'CREATE')->first();
+        return $log;
+    }
+
     public function getAll($filters, $period, $now){
         if($filters){
             return DB::table('logs')->whereIn('action', $filters)->paginate(20);

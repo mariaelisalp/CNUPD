@@ -90,8 +90,10 @@
     @endif
 
     <div class="container"><a href="{{'/pessoas/cadastrar'}}">
+    @if(auth()->user())
         <button class="btn btn-warning btn-lg">Cadastrar Pessoa</button>
         </a><br><br>
+    @endif
     </div>
 @include('parciais.footer')
 @endsection

@@ -10,6 +10,7 @@ use App\Models\Station;
 use App\Models\City_Station;
 use App\Models\City;
 use App\Models\State;
+use App\Models\User;
 use App\Models\People_Contact_City;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePeopleRequest;
@@ -54,7 +55,14 @@ class PeopleController extends Controller
         return response()->json($cities);
     }
 
-    //armazena dados vindo no formulário no banco
+    public function registers() {
+        $user = auth()->user();
+        $people = User::getRegisters($user);
+    
+        return view('user_registros', compact('people'));
+    }
+
+    
     public function store(StorePeopleRequest $request){
 
         $validatedData = $request->validated();
@@ -80,25 +88,29 @@ class PeopleController extends Controller
     }
 
     //Detalhes de registro
-    public function show(People $people){
+    public function show(People $people)
+{
+    $show = $people->getDetails($people);
+    $registro = UserActionLog::getRegistro($people->id);
+    $permission = $registro ? true : false;
 
-        $show = $people->getDetails($people);
+    $details = array_merge([
+        'people' => $people,
+        'permission' => $permission
+    ], $show);
 
-        $details = array_merge([
-            'people' => $people,
-        ], $show);
-
-        if(auth()->user()){
-            UserActionLog::read_log($people);
-        }
-
-        if ($people->missing == 1) {
-            return view('people.show_desaparecido', $details);
-        } 
-        else {
-            return view('people.show_nao_identificado', $details);
-        }
+    if (auth()->user()) {
+        UserActionLog::read_log($people);
     }
+
+    if ($people->missing == 1) {
+        return view('people.show_desaparecido', $details);
+    } 
+    else {
+        return view('people.show_nao_identificado', $details);
+    }
+}
+
 
     public function edit(People $people){
         $states = State::all()->pluck('abbr','id');

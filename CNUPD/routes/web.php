@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pessoas/edit/{people}', [PeopleController::class, 'edit'])->name('people.edit');
     Route::put('/pessoas/update/{people}', [PeopleController::class, 'update'])->name('people.update');
     Route::delete('/pessoas/delete/{people}', [PeopleController::class, 'delete'])->name('people.delete');
+    Route::get('/user_registros', [PeopleController::class, 'registers'])->name('user_registros');
     
 });
 
