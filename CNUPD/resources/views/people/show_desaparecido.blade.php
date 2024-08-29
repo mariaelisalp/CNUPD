@@ -102,7 +102,7 @@
                </div>
 
                <br> Última Alteração: {{\Carbon\Carbon::parse($people->updated_at)->tz('America/Sao_Paulo')->format('d/m/Y H:m:s')}} <br><br>
-               @if(auth()->user()->admin || (auth()->user() && $permission))
+               @if((auth()->user() && auth()->user()->admin) || (auth()->user() && $permission))
                <div class="d-inline-block">
                     <a href="{{route('people.edit', ['people' => $people->id])}}"><button class="btn btn-warning">Editar</button></a>
 

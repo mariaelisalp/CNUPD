@@ -14,7 +14,7 @@ class PeopleSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 15; $i++) {
             DB::table('people')->insert([
                 'name' => 'Nome ' . $i,
                 'eye_color' => ['castanhos', 'azuis', 'verdes'][rand(0, 2)],

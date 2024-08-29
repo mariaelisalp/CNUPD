@@ -12,8 +12,11 @@ class UserActionLogController extends Controller
         $filters = $request->input('filters', []);
         $period = $request->input('period', null);
         $now = Carbon::now();
-        $startDate = $now->subDays($period);
-        $logs = (new UserActionLog())->getAll($filters, $startDate, $now);
+        if ($period !== null) {
+            $period = (int) $period;
+        }
+
+        $logs = (new UserActionLog())->getAll($filters, $period);
 
         $logs_details = UserActionLog::getDetails($logs);
 

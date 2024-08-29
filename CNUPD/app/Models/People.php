@@ -90,13 +90,14 @@ class People extends Model
     }
 
     public static function updateImage(StorePeopleRequest $request, People $people){
-        if ($request->input('remove_image') == '1') {
+        if ($request->input('remove_image') == 1) {
             if ($people->image && $people->image != 'noImage.jpg') {
                 Storage::delete('public/images/' . $people->image);
             }
         }
-
-        return $people->uploadImage($request);
+        if($request->hasFile('image')){
+            return $people->uploadImage($request);
+        }   
         
     }
 

@@ -80,9 +80,7 @@
             </div>
         </div>
     </div>
-    @endif
-
-@include('parciais.footer')
+    @endif <br><br><br>
 
 </x-app-layout>
 

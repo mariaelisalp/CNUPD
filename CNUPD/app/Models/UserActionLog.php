@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class UserActionLog extends Model
 {
@@ -95,25 +96,30 @@ class UserActionLog extends Model
     }
 
     public static function getRegistro($id){
-        $user = auth()->user();
-        $log = DB::table('logs')->where('user_id', $user->id)->where('people_id', $id)->where('action', 'CREATE')->first();
-        return $log;
+        if(auth()->user()){
+            $user = auth()->user();
+             $log = DB::table('logs')->where('user_id', $user->id)->where('people_id', $id)->where('action', 'CREATE')->first();
+            return $log;
+        }
     }
 
-    public function getAll($filters, $period, $now){
-        if($filters){
-            return DB::table('logs')->whereIn('action', $filters)->paginate(20);
-        }
-        else{
-            return DB::table('logs')->paginate(20);
-        }
+    public function getAll($filters, $period)
+{
+    $query = DB::table('logs');
 
-        if ($period) {
-            $startDate = now()->subDays($period)->startOfDay();
-            return DB::table('logs')->where('created_at', '>=', $startDate);
-        }
-        
+    if ($filters) {
+        $query->whereIn('action', $filters);
     }
+
+    if ($period) {
+        $startDate = Carbon::now()->subDays($period)->startOfDay();
+        $query->where('created_at', '>=', $startDate);
+    }
+
+    return $query->paginate(20);
+}
+
+
 
     public static function getDetails($logs){
         $details = [];

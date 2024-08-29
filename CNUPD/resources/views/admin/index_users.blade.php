@@ -95,7 +95,7 @@
         <div class="toast-body">
             {{ session('message2') }}
         </div>
-    </div><br>
+    </div><br><br><br><br><br>
     
 @include('parciais.footer')
 @endsection

@@ -129,7 +129,6 @@ class PeopleController extends Controller
 
     public function update(StorePeopleRequest $request, People $people){
         $request -> validated();
-
         $fileNameToStore = People::updateImage($request, $people);
         $data = $request->all();
 
